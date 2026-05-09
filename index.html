@@ -57,7 +57,8 @@ body {
   -webkit-backdrop-filter: blur(6px);
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
+  overflow-y: auto;
 }
 .modal-overlay.open { display: flex; }
 
@@ -65,10 +66,11 @@ body {
   background: var(--white);
   border-radius: 24px;
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   box-shadow: 0 24px 80px rgba(11,36,89,.25);
   overflow: hidden;
   animation: modalPop .28s cubic-bezier(.34,1.56,.64,1);
+  margin: auto;
 }
 @keyframes modalPop {
   from { opacity:0; transform: scale(.92) translateY(16px); }
@@ -140,6 +142,9 @@ body {
 .form-group input.field-error { border-color: #f44336 !important; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+}
 
 .modal-submit {
   width: 100%;
@@ -182,7 +187,7 @@ body {
 }
 
 .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.nav-logo-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.nav-logo-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .nav-logo-placeholder {
   width: 44px; height: 44px; border-radius: 50%;
   background: linear-gradient(135deg, var(--navy), var(--sky));
@@ -194,7 +199,7 @@ body {
 .nav-brand-tag { font-size: .68rem; color: var(--muted); letter-spacing: .5px; text-transform: uppercase; font-weight: 500; }
 
 .nav-links { display: flex; gap: 6px; align-items: center; }
-.nav-links a { font-size: .84rem; font-weight: 600; color: var(--text); padding: 7px 13px; border-radius: 8px; transition: background .18s, color .18s; }
+.nav-links a { font-size: .84rem; font-weight: 600; color: var(--text); padding: 7px 13px; border-radius: 8px; transition: background .18s, color .18s; white-space: nowrap; }
 .nav-links a:hover { background: var(--pale); color: var(--blue); }
 
 .nav-book {
@@ -217,7 +222,7 @@ body {
 .mobile-menu.open { display: flex; }
 .mobile-menu a { font-size: .9rem; font-weight: 600; color: var(--text); padding: 12px 14px; border-radius: var(--r-sm); transition: background .18s; }
 .mobile-menu a:hover { background: var(--pale); color: var(--blue); }
-.mobile-menu .m-book { margin-top: 8px; background: var(--wa); color: #fff !important; text-align: center; border-radius: 50px !important; box-shadow: 0 4px 16px rgba(37,211,102,.3); font-weight: 700 !important; }
+.mobile-menu .m-book { margin-top: 8px; background: var(--wa); color: #fff !important; text-align: center; border-radius: 50px !important; box-shadow: 0 4px 16px rgba(37,211,102,.3); font-weight: 700 !important; padding: 13px 14px !important; }
 
 /* ═══════════════════════════════════
    HERO
@@ -310,15 +315,15 @@ body {
 .tab-panel.active { display: block; animation: fadeUp .35s ease; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
-.price-table-wrap { overflow-x: auto; border-radius: var(--r); box-shadow: var(--sh); }
+.price-table-wrap { overflow-x: auto; border-radius: var(--r); box-shadow: var(--sh); -webkit-overflow-scrolling: touch; }
 table.pt { width: 100%; border-collapse: collapse; min-width: 480px; }
 table.pt thead tr { background: linear-gradient(90deg, var(--navy), var(--blue)); }
-table.pt thead th { padding: 14px 18px; text-align: left; color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+table.pt thead th { padding: 14px 18px; text-align: left; color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; white-space: nowrap; }
 table.pt tbody tr:nth-child(even) td { background: var(--off); }
 table.pt tbody tr:hover td { background: var(--pale); }
 table.pt tbody tr:last-child td { border-bottom: none; }
 table.pt td { padding: 13px 18px; font-size: .88rem; border-bottom: 1px solid var(--border); }
-.pv { font-weight: 800; color: var(--blue); font-size: .92rem; }
+.pv { font-weight: 800; color: var(--blue); font-size: .92rem; white-space: nowrap; }
 .pnote { margin-top: 14px; background: var(--pale); border-left: 4px solid var(--sky); border-radius: 8px; padding: 12px 16px; font-size: .82rem; color: var(--muted); line-height: 1.65; }
 
 .extras-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
@@ -401,9 +406,9 @@ table.pt td { padding: 13px 18px; font-size: .88rem; border-bottom: 1px solid va
 .quick-ref { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 36px 32px; box-shadow: var(--sh); }
 .quick-ref h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
 .qr-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
-.qr-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: var(--off); border-radius: 8px; font-size: .86rem; }
+.qr-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: var(--off); border-radius: 8px; font-size: .86rem; gap: 8px; }
 .qr-row .name { font-weight: 600; color: var(--navy); }
-.qr-row .price { font-weight: 800; color: var(--blue); font-size: .88rem; }
+.qr-row .price { font-weight: 800; color: var(--blue); font-size: .88rem; white-space: nowrap; }
 .wa-center { display: flex; align-items: center; justify-content: center; gap: 9px; background: var(--wa); color: #fff; padding: 15px; border-radius: var(--r-sm); font-weight: 700; font-size: .9rem; transition: all .22s; box-shadow: 0 4px 16px rgba(37,211,102,.3); border: none; cursor: pointer; width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
 .wa-center:hover { background: var(--wa-dark); transform: translateY(-2px); }
 
@@ -439,6 +444,8 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
 /* ═══════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════ */
+
+/* Tablet: ≤ 960px */
 @media (max-width: 960px) {
   .hero-wrap { grid-template-columns: 1fr; }
   .hero-card { display: none; }
@@ -446,6 +453,8 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   .book-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr 1fr; }
 }
+
+/* Mobile: ≤ 768px */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
@@ -454,28 +463,40 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   .hero-sub  { font-size: .93rem; }
   .hero-btns { gap: 10px; }
   .btn-wa-lg, .btn-ghost { padding: 12px 20px; font-size: .86rem; }
-  .form-row  { grid-template-columns: 1fr; }
+  .section   { padding: 60px 20px; }
+  #areas     { padding: 60px 20px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .steps-grid    { grid-template-columns: 1fr 1fr; }
+  .extras-grid   { grid-template-columns: 1fr; }
 }
-@media (max-width: 480px) {
-  .section { padding: 60px 20px; }
-  #areas   { padding: 60px 20px; }
-  .contact-box, .quick-ref { padding: 28px 20px; }
-  .footer-top { grid-template-columns: 1fr; }
+
+/* Small mobile: ≤ 540px */
+@media (max-width: 540px) {
+  .hero-wrap { padding: 36px 0 52px; }
+  .hero-h1   { font-size: 2rem; }
+  .hero-sub  { font-size: .88rem; }
   .hero-stats { gap: 20px; }
-  .hs-num { font-size: 1.6rem; }
-  .hero-h1 { font-size: 2rem; }
-  .btn-wa-lg, .btn-ghost { width: 100%; justify-content: center; }
+  .hs-num   { font-size: 1.6rem; }
   .hero-btns { flex-direction: column; }
-  .tabs-row { gap: 6px; }
-  .tab-btn { font-size: .75rem; padding: 7px 14px; }
+  .btn-wa-lg, .btn-ghost { width: 100%; justify-content: center; }
+  .steps-grid    { grid-template-columns: 1fr; }
+  .tabs-row  { gap: 6px; }
+  .tab-btn   { font-size: .75rem; padding: 7px 14px; }
   table.pt thead th, table.pt td { padding: 10px 12px; font-size: .8rem; }
+  .contact-box, .quick-ref { padding: 24px 18px; }
   .modal-box { border-radius: 18px; }
-  .modal-head { padding: 20px 20px 16px; }
-  .modal-body { padding: 20px 20px 24px; }
+  .modal-head { padding: 18px 18px 14px; }
+  .modal-body { padding: 18px 18px 22px; }
+  .why-visual { padding: 32px 24px; }
+  .why-visual h2 { font-size: 1.4rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 28px; }
 }
+
+/* Very small: ≤ 360px */
 @media (max-width: 360px) {
   .nav-brand-name { font-size: .82rem; }
   .nav-brand-tag  { display: none; }
+  .nav-logo-img   { width: 36px; height: 36px; }
 }
 </style>
 </head>
@@ -487,7 +508,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
     <div class="modal-head">
       <div class="modal-head-text">
         <h3 id="modalTitle">Complete Your Booking</h3>
-        <p>Fill in your details — WhatsApp will open with everything ready. Just press Send!</p>
+        <p>Fill in your details — WhatsApp will open with your booking ready to send.</p>
         <div class="modal-service-badge" id="modalServiceBadge">Service</div>
       </div>
       <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
@@ -510,6 +531,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       <div class="form-row">
         <div class="form-group">
           <label for="fieldDate">Preferred Date</label>
+          <!-- min is set dynamically via JS to today -->
           <input type="date" id="fieldDate" />
         </div>
         <div class="form-group">
@@ -519,13 +541,13 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       </div>
       <div class="form-group">
         <label for="fieldNotes">Extra Notes (optional)</label>
-        <textarea id="fieldNotes" placeholder="Special requests, access details, etc."></textarea>
+        <textarea id="fieldNotes" placeholder="Special requests, access details, house size, floor number, etc."></textarea>
       </div>
       <button class="modal-submit" id="modalSubmit">
         <span style="font-size:1.2rem">&#x1F4AC;</span>
         Open WhatsApp &amp; Send Booking
       </button>
-      <p class="modal-note">WhatsApp will open with your details pre-filled. Just tap <strong>Send</strong>.</p>
+      <p class="modal-note">WhatsApp will open with your booking details pre-filled. Just tap <strong>Send</strong>.</p>
     </div>
   </div>
 </div>
@@ -535,6 +557,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
 <nav id="nav">
   <div class="nav-inner">
     <a href="#home" class="nav-brand">
+      <!-- Replace nyumbanilogo.png with your actual logo file name -->
       <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services logo" class="nav-logo-img"
         onerror="this.style.display='none'; document.querySelector('.nav-logo-placeholder').style.display='flex';" />
       <div class="nav-logo-placeholder" style="display:none;">&#x1F3E0;</div>
@@ -585,7 +608,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       </div>
     </div>
     <div class="hero-card">
-      <img src="logo.png" alt="Nyumbani Cleaning Services" class="hero-card-logo"
+      <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services" class="hero-card-logo"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
       <div class="hero-card-logo-placeholder" style="display:none;">&#x1F3E0;</div>
       <h3>Nyumbani Cleaning Services</h3>
@@ -639,14 +662,14 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         <table class="pt">
           <thead><tr><th>Package</th><th>Frequency</th><th>Coverage</th><th>Price / Month</th><th>Book</th></tr></thead>
           <tbody>
-            <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('&#x1F4C5; Basic Subscription — KES 4,000/month (Bedsitter &amp; 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('&#x1F4C5; 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('&#x1F4C5; 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('&#x1F4C5; Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('&#x1F4C5; Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('&#x1F4C5; Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('&#x1F4C5; Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('&#x1F4C5; Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Basic Subscription — KES 4,000/month (Bedsitter & 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('📅 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('📅 Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -659,12 +682,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         <table class="pt">
           <thead><tr><th>House Type</th><th>Empty House</th><th>Occupied House</th><th>Book</th></tr></thead>
           <tbody>
-            <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('&#x1F9F9; Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -677,12 +700,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         <table class="pt">
           <thead><tr><th>House Type</th><th>Price</th><th>Book</th></tr></thead>
           <tbody>
-            <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('&#x1F3E0; General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -694,14 +717,14 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         <table class="pt">
           <thead><tr><th>Item</th><th>Size</th><th>Price</th><th>Book</th></tr></thead>
           <tbody>
-            <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Mattress Cleaning — 4x6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Mattress Cleaning — 5x6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Mattress Cleaning — 6x6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Bed Frame Cleaning — 4x6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Bed Frame Cleaning — 5x6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Bed Frame Cleaning — 6x6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m2</td><td><button class="bk" onclick="openModal('&#x1F6CB;&#xFE0F; Carpet Cleaning — KES 40/m2')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 4×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 5×6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 6×6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 4×6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 5×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 6×6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('🛋️ Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m²</td><td><button class="bk" onclick="openModal('🛋️ Carpet Cleaning — KES 40/m²')">&#x1F4AC; Book</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -712,23 +735,23 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       <div class="extras-grid">
         <div class="extra-c">
           <div><div class="ec-name">&#x1F455; Laundry Basket</div><div class="ec-sub">Per basket</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('&#x1F455; Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+          <div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('👕 Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div>
         </div>
         <div class="extra-c">
           <div><div class="ec-name">&#x1F454; Folding Clothes</div><div class="ec-sub">Per session</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('&#x1F454; Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+          <div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('👔 Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div>
         </div>
         <div class="extra-c">
           <div><div class="ec-name">&#x1F525; Ironing</div><div class="ec-sub">KES 1,600/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('&#x1F525; Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+          <div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('🔥 Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
         </div>
         <div class="extra-c">
           <div><div class="ec-name">&#x1F373; Cooking</div><div class="ec-sub">KES 2,000/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('&#x1F373; Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+          <div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('🍳 Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
         </div>
         <div class="extra-c">
           <div><div class="ec-name">&#x1F45F; Shoe Wiping</div><div class="ec-sub">KES 1,200/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('&#x1F45F; Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+          <div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('👟 Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
         </div>
       </div>
     </div>
@@ -739,11 +762,11 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         <table class="pt">
           <thead><tr><th>House Size</th><th>Price</th><th>Book</th></tr></thead>
           <tbody>
-            <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('&#x1F41B; Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('&#x1F41B; Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('&#x1F41B; Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('&#x1F41B; Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('&#x1F41B; Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -846,12 +869,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
           <div class="qr-row"><span class="name">&#x1F3E0; 1BR Deep Clean</span><span class="price">KES 4,000</span></div>
           <div class="qr-row"><span class="name">&#x1F4C5; Basic Subscription</span><span class="price">KES 4,000/mo</span></div>
           <div class="qr-row"><span class="name">&#x1F6CB;&#xFE0F; Sofa (per seater)</span><span class="price">KES 500</span></div>
-          <div class="qr-row"><span class="name">&#x1F6CF;&#xFE0F; Mattress 4x6</span><span class="price">KES 2,500</span></div>
+          <div class="qr-row"><span class="name">&#x1F6CF;&#xFE0F; Mattress 4×6</span><span class="price">KES 2,500</span></div>
           <div class="qr-row"><span class="name">&#x1F455; Laundry Basket</span><span class="price">KES 499</span></div>
           <div class="qr-row"><span class="name">&#x1F41B; Fumigation (Studio)</span><span class="price">KES 2,500</span></div>
           <div class="qr-row"><span class="name">&#x1F3E0; General Studio</span><span class="price">KES 999</span></div>
         </div>
-        <button class="wa-center" onclick="openModal('General Enquiry / Any Service')">
+        <button class="wa-center" onclick="openModal('General Enquiry — Any Service')">
           &#x1F4AC; Book Any Service via WhatsApp
         </button>
       </div>
@@ -865,7 +888,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
     <div class="footer-top">
       <div>
         <div class="f-brand">
-          <img src="logo.png" alt="Nyumbani" class="f-logo" onerror="this.style.display='none'" />
+          <img src="nyumbanilogo.png" alt="Nyumbani" class="f-logo" onerror="this.style.display='none'" />
           <div class="f-name">Nyumbani Cleaning Services</div>
         </div>
         <p class="f-desc">A Clean Home, A Better Life. Serving Nairobi and surrounding areas with professional, reliable cleaning services you can trust.</p>
@@ -902,6 +925,15 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
 <a href="https://wa.me/254118624445?text=Hello%20Nyumbani!%20I%27d%20like%20to%20book%20a%20cleaning%20service." target="_blank" class="float-wa" title="WhatsApp Us">&#x1F4AC;</a>
 
 <script>
+/* ── Set minimum date to today (no past dates) ── */
+(function() {
+  var today = new Date();
+  var yyyy  = today.getFullYear();
+  var mm    = String(today.getMonth() + 1).padStart(2, '0');
+  var dd    = String(today.getDate()).padStart(2, '0');
+  document.getElementById('fieldDate').min = yyyy + '-' + mm + '-' + dd;
+})();
+
 /* ── NAV scroll shadow ── */
 window.addEventListener('scroll', function() {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
@@ -945,28 +977,31 @@ document.querySelectorAll('.reveal').forEach(function(el, i) {
   revealObserver.observe(el);
 });
 
-/* ══════════════════════════════════
+/* ══════════════════════════════════════════
    BOOKING MODAL
-══════════════════════════════════ */
-var modal       = document.getElementById('bookingModal');
-var modalClose  = document.getElementById('modalClose');
-var modalBadge  = document.getElementById('modalServiceBadge');
-var modalSubmit = document.getElementById('modalSubmit');
+══════════════════════════════════════════ */
+var modal          = document.getElementById('bookingModal');
+var modalCloseBtn  = document.getElementById('modalClose');
+var modalBadge     = document.getElementById('modalServiceBadge');
+var modalSubmitBtn = document.getElementById('modalSubmit');
 var currentService = '';
 
 function openModal(serviceName) {
   currentService = serviceName;
   modalBadge.textContent = serviceName;
 
-  // Reset all fields
-  document.getElementById('fieldName').value  = '';
-  document.getElementById('fieldPhone').value = '';
-  document.getElementById('fieldArea').value  = '';
-  document.getElementById('fieldDate').value  = '';
-  document.getElementById('fieldTime').value  = '';
-  document.getElementById('fieldNotes').value = '';
+  /* Reset fields */
+  ['fieldName','fieldPhone','fieldArea','fieldDate','fieldTime','fieldNotes'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  /* Re-enforce min date every time modal opens */
+  var today = new Date();
+  var yyyy  = today.getFullYear();
+  var mm    = String(today.getMonth() + 1).padStart(2, '0');
+  var dd    = String(today.getDate()).padStart(2, '0');
+  document.getElementById('fieldDate').min = yyyy + '-' + mm + '-' + dd;
 
-  // Clear any error styling
+  /* Clear error styles */
   ['fieldName','fieldArea'].forEach(function(id) {
     document.getElementById(id).classList.remove('field-error');
   });
@@ -981,17 +1016,12 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-modalClose.addEventListener('click', closeModal);
+modalCloseBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 
-modal.addEventListener('click', function(e) {
-  if (e.target === modal) closeModal();
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-});
-
-modalSubmit.addEventListener('click', function() {
+/* ── Send booking ── */
+modalSubmitBtn.addEventListener('click', function() {
   var name  = document.getElementById('fieldName').value.trim();
   var phone = document.getElementById('fieldPhone').value.trim();
   var area  = document.getElementById('fieldArea').value.trim();
@@ -999,8 +1029,11 @@ modalSubmit.addEventListener('click', function() {
   var time  = document.getElementById('fieldTime').value;
   var notes = document.getElementById('fieldNotes').value.trim();
 
-  // Validate required fields
+  /* Validate */
   var valid = true;
+  document.getElementById('fieldName').classList.remove('field-error');
+  document.getElementById('fieldArea').classList.remove('field-error');
+
   if (!name) {
     document.getElementById('fieldName').classList.add('field-error');
     document.getElementById('fieldName').focus();
@@ -1013,44 +1046,46 @@ modalSubmit.addEventListener('click', function() {
   }
   if (!valid) return;
 
-  // Format date
+  /* Format date nicely */
   var dateStr = '';
   if (date) {
-    var d = new Date(date + 'T00:00:00');
-    dateStr = d.toLocaleDateString('en-KE', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    var d = new Date(date + 'T12:00:00');
+    dateStr = d.toLocaleDateString('en-KE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  // Format time
+  /* Format time nicely */
   var timeStr = '';
   if (time) {
     var parts = time.split(':');
-    var hr = parseInt(parts[0]);
+    var hr = parseInt(parts[0], 10);
     var mn = parts[1];
     var ampm = hr >= 12 ? 'PM' : 'AM';
     var hr12 = hr % 12 || 12;
     timeStr = hr12 + ':' + mn + ' ' + ampm;
   }
 
-  // Build WhatsApp message
-  var msg = 'Hello Nyumbani Cleaning Services! \n\n';
-  msg += "I'd like to book the following service:\n";
-  msg += '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n';
-  msg += '\uD83E\uDDF9 *Service:* ' + currentService + '\n';
-  msg += '\uD83D\uDC64 *Name:* ' + name + '\n';
-  if (phone) msg += '\uD83D\uDCDE *My Number:* ' + phone + '\n';
-  msg += '\uD83D\uDCCD *Location/Area:* ' + area + '\n';
-  if (dateStr) msg += '\uD83D\uDCC5 *Preferred Date:* ' + dateStr + '\n';
-  if (timeStr) msg += '\u23F0 *Preferred Time:* ' + timeStr + '\n';
-  if (notes)   msg += '\uD83D\uDCDD *Notes:* ' + notes + '\n';
-  msg += '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n';
-  msg += 'Please confirm availability. Thank you!';
+  /* ── Build clean, well-formatted WhatsApp message ── */
+  var lines = [];
+  lines.push('Hello Nyumbani Cleaning Services! 👋');
+  lines.push('');
+  lines.push('I would like to book the following service:');
+  lines.push('');
+  lines.push('🧹 *Service:* ' + currentService);
+  lines.push('👤 *Name:* ' + name);
+  if (phone) lines.push('📞 *My Number:* ' + phone);
+  lines.push('📍 *Location / Area:* ' + area);
+  if (dateStr) lines.push('📅 *Preferred Date:* ' + dateStr);
+  if (timeStr) lines.push('⏰ *Preferred Time:* ' + timeStr);
+  if (notes)   lines.push('📝 *Additional Notes:* ' + notes);
+  lines.push('');
+  lines.push('Kindly confirm availability. Thank you! 🙏');
 
-  var waURL = 'https://wa.me/254118624445?text=' + encodeURIComponent(msg);
-  window.open(waURL, '_blank');
+  var msg = lines.join('\n');
+  window.open('https://wa.me/254118624445?text=' + encodeURIComponent(msg), '_blank');
   closeModal();
 });
 
-// Remove error class on input
+/* Remove error highlight on input */
 document.getElementById('fieldName').addEventListener('input', function() { this.classList.remove('field-error'); });
 document.getElementById('fieldArea').addEventListener('input', function() { this.classList.remove('field-error'); });
 </script>
