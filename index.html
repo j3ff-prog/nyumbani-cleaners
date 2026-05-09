@@ -8,507 +8,253 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-
 <style>
-/* ── RESET & ROOT ── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-img { max-width: 100%; display: block; }
-a { text-decoration: none; }
-ul { list-style: none; }
-
-:root {
-  --navy:      #0b2459;
-  --blue:      #1450b0;
-  --mid:       #1976d2;
-  --sky:       #2196f3;
-  --light:     #64b5f6;
-  --pale:      #e8f4fd;
-  --white:     #ffffff;
-  --off:       #f4f8ff;
-  --border:    #dce8f7;
-  --text:      #0d1b3e;
-  --muted:     #5a6e8c;
-  --green:     #22c55e;
-  --wa:        #25d366;
-  --wa-dark:   #128c7e;
-  --r: 18px;
-  --r-sm: 12px;
-  --sh: 0 4px 24px rgba(11,36,89,.10);
-  --sh-lg: 0 12px 48px rgba(11,36,89,.15);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+img{max-width:100%;display:block}
+a{text-decoration:none}
+ul{list-style:none}
+:root{
+  --navy:#0b2459;--blue:#1450b0;--mid:#1976d2;--sky:#2196f3;
+  --light:#64b5f6;--pale:#e8f4fd;--white:#ffffff;--off:#f4f8ff;
+  --border:#dce8f7;--text:#0d1b3e;--muted:#5a6e8c;
+  --wa:#25d366;--wa-dark:#128c7e;
+  --r:18px;--r-sm:12px;
+  --sh:0 4px 24px rgba(11,36,89,.10);
+  --sh-lg:0 12px 48px rgba(11,36,89,.15);
 }
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  color: var(--text);
-  background: var(--white);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(11,36,89,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--white);border-radius:24px;width:100%;max-width:500px;box-shadow:0 24px 80px rgba(11,36,89,.25);overflow:hidden;animation:modalPop .28s cubic-bezier(.34,1.56,.64,1);margin:auto}
+@keyframes modalPop{from{opacity:0;transform:scale(.92) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{background:linear-gradient(120deg,var(--navy),var(--blue));padding:24px 28px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-head-text h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:4px}
+.modal-head-text p{font-size:.78rem;color:rgba(255,255,255,.72);line-height:1.5}
+.modal-service-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:.73rem;font-weight:700;padding:5px 12px;border-radius:20px;margin-top:10px;word-break:break-word}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .18s}
+.modal-close:hover{background:rgba(255,255,255,.28)}
+.modal-body{padding:24px 28px 28px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.75rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.form-group input,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:var(--text);background:var(--off);outline:none;transition:border-color .18s,box-shadow .18s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(33,150,243,.12);background:var(--white)}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-group input.field-error{border-color:#f44336!important}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-submit{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--wa);color:#fff;padding:14px 20px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.94rem;font-weight:800;box-shadow:0 6px 20px rgba(37,211,102,.35);transition:all .22s;margin-top:6px}
+.modal-submit:hover{background:var(--wa-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,211,102,.45)}
+.modal-note{text-align:center;font-size:.73rem;color:var(--muted);margin-top:10px;line-height:1.5}
 
-/* ═══════════════════════════════════
-   BOOKING MODAL
-═══════════════════════════════════ */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(11,36,89,.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  overflow-y: auto;
-}
-.modal-overlay.open { display: flex; }
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+#nav.scrolled{box-shadow:var(--sh)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-logo-img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.nav-logo-placeholder{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--sky));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.nav-brand-text{line-height:1.15}
+.nav-brand-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--navy);letter-spacing:.3px}
+.nav-brand-tag{font-size:.68rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;font-weight:500}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{font-size:.84rem;font-weight:600;color:var(--text);padding:7px 13px;border-radius:8px;transition:background .18s,color .18s;white-space:nowrap}
+.nav-links a:hover{background:var(--pale);color:var(--blue)}
+.nav-book{display:flex;align-items:center;gap:7px;background:var(--wa);color:#fff!important;padding:10px 18px!important;border-radius:50px!important;font-weight:700!important;font-size:.84rem!important;box-shadow:0 4px 16px rgba(37,211,102,.35);transition:background .2s,transform .15s,box-shadow .2s}
+.nav-book:hover{background:var(--wa-dark)!important;transform:translateY(-1px);box-shadow:0 6px 22px rgba(37,211,102,.45)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border-radius:8px;background:none;border:none;-webkit-tap-highlight-color:transparent}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;flex-direction:column;background:var(--white);border-top:1px solid var(--border);padding:16px 24px 24px;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:.9rem;font-weight:600;color:var(--text);padding:12px 14px;border-radius:var(--r-sm);transition:background .18s}
+.mobile-menu a:hover{background:var(--pale);color:var(--blue)}
+.mobile-menu .m-book{margin-top:8px;background:var(--wa);color:#fff!important;text-align:center;border-radius:50px!important;box-shadow:0 4px 16px rgba(37,211,102,.3);font-weight:700!important;padding:13px 14px!important}
 
-.modal-box {
-  background: var(--white);
-  border-radius: 24px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 24px 80px rgba(11,36,89,.25);
-  overflow: hidden;
-  animation: modalPop .28s cubic-bezier(.34,1.56,.64,1);
-  margin: auto;
-}
-@keyframes modalPop {
-  from { opacity:0; transform: scale(.92) translateY(16px); }
-  to   { opacity:1; transform: scale(1) translateY(0); }
-}
+/* HERO */
+#home{padding-top:68px;background:linear-gradient(160deg,var(--navy) 0%,#163a9e 55%,var(--mid) 100%);position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center}
+#home::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
+#home::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(33,150,243,.25) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:60px 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center;position:relative;z-index:1}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);padding:6px 16px;border-radius:50px;font-size:.76rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin-bottom:24px}
+.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:20px}
+.hero-h1 em{font-style:normal;background:linear-gradient(90deg,var(--light),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.78);line-height:1.75;max-width:500px;margin-bottom:36px;font-weight:400}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px}
+.btn-wa-lg{display:inline-flex;align-items:center;gap:9px;background:var(--wa);color:#fff;padding:14px 26px;border-radius:50px;font-weight:700;font-size:.94rem;box-shadow:0 6px 22px rgba(37,211,102,.4);transition:all .22s}
+.btn-wa-lg:hover{background:var(--wa-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,211,102,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.35);color:#fff;padding:14px 26px;border-radius:50px;font-weight:700;font-size:.94rem;transition:all .22s}
+.btn-ghost:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hs{color:#fff}
+.hs-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;color:var(--light)}
+.hs-label{font-size:.73rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.2);border-radius:24px;padding:40px 32px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.hero-card-logo{width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.hero-card-logo-placeholder{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.15);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:3.5rem}
+.hero-card h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+.hero-card p{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.6}
+.hero-card-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hchip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.72rem;font-weight:600;padding:5px 12px;border-radius:20px}
 
-.modal-head {
-  background: linear-gradient(120deg, var(--navy), var(--blue));
-  padding: 24px 28px 20px;
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
-}
-.modal-head-text h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.15rem; font-weight: 800; color: #fff;
-  margin-bottom: 4px;
-}
-.modal-head-text p {
-  font-size: .78rem; color: rgba(255,255,255,.72);
-  line-height: 1.5;
-}
-.modal-service-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.25);
-  color: #fff; font-size: .73rem; font-weight: 700;
-  padding: 5px 12px; border-radius: 20px;
-  margin-top: 10px;
-  word-break: break-word;
-}
-.modal-close {
-  background: rgba(255,255,255,.15); border: none;
-  color: #fff; width: 32px; height: 32px; border-radius: 50%;
-  font-size: 1.1rem; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .18s;
-}
-.modal-close:hover { background: rgba(255,255,255,.28); }
+/* SECTIONS */
+.section{padding:80px 24px}
+.container{max-width:1200px;margin:0 auto}
+.section-alt{background:var(--off)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--pale);color:var(--blue);padding:5px 13px;border-radius:50px;font-size:.72rem;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--navy);line-height:1.15;letter-spacing:-.3px;margin-bottom:12px}
+.section-title span{color:var(--sky)}
+.section-body{font-size:.97rem;color:var(--muted);line-height:1.8;max-width:560px;margin-bottom:48px}
 
-.modal-body { padding: 24px 28px 28px; }
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.svc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;transition:transform .22s,box-shadow .22s,border-color .22s;cursor:default;position:relative;overflow:hidden}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--sky));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc-card:hover{transform:translateY(-5px);box-shadow:var(--sh-lg);border-color:var(--light)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon{width:52px;height:52px;border-radius:14px;background:var(--pale);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:18px}
+.svc-card h3{font-size:.97rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+.svc-card p{font-size:.84rem;color:var(--muted);line-height:1.65}
+.svc-from{margin-top:14px;font-size:.78rem;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:4px}
 
-.form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block;
-  font-size: .75rem; font-weight: 700; color: var(--navy);
-  text-transform: uppercase; letter-spacing: .5px;
-  margin-bottom: 6px;
-}
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-sm);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: .9rem; color: var(--text);
-  background: var(--off);
-  outline: none;
-  transition: border-color .18s, box-shadow .18s;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--sky);
-  box-shadow: 0 0 0 3px rgba(33,150,243,.12);
-  background: var(--white);
-}
-.form-group textarea { resize: vertical; min-height: 70px; }
-.form-group input.field-error { border-color: #f44336 !important; }
+/* ACCORDION */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.accordion{display:flex;flex-direction:column;gap:12px}
+.acc-item{border:1.5px solid var(--border);border-radius:var(--r);background:var(--white);overflow:hidden;transition:box-shadow .22s,border-color .22s}
+.acc-item.open{border-color:var(--sky);box-shadow:var(--sh-lg)}
+.acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;-webkit-tap-highlight-color:transparent;transition:background .18s}
+.acc-trigger:hover{background:var(--off)}
+.acc-item.open .acc-trigger{background:var(--off)}
+.acc-trigger-left{display:flex;align-items:center;gap:12px}
+.acc-emoji{width:40px;height:40px;flex-shrink:0;background:var(--pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:background .22s}
+.acc-item.open .acc-emoji{background:var(--navy)}
+.acc-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--navy)}
+.acc-sub{font-size:.76rem;color:var(--muted);margin-top:2px}
+.acc-chevron{width:32px;height:32px;flex-shrink:0;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--blue);transition:transform .28s,background .18s}
+.acc-item.open .acc-chevron{transform:rotate(180deg);background:var(--navy);color:#fff}
+.acc-body{display:none;padding:0 22px 22px;animation:fadeUp .3s ease}
+.acc-item.open .acc-body{display:block}
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 480px) {
-  .form-row { grid-template-columns: 1fr; }
-}
+/* TABLES */
+.price-table-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh);-webkit-overflow-scrolling:touch}
+table.pt{width:100%;border-collapse:collapse;min-width:480px}
+table.pt thead tr{background:linear-gradient(90deg,var(--navy),var(--blue))}
+table.pt thead th{padding:14px 18px;text-align:left;color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+table.pt tbody tr:nth-child(even) td{background:var(--off)}
+table.pt tbody tr:hover td{background:var(--pale)}
+table.pt tbody tr:last-child td{border-bottom:none}
+table.pt td{padding:13px 18px;font-size:.88rem;border-bottom:1px solid var(--border)}
+.pv{font-weight:800;color:var(--blue);font-size:.92rem;white-space:nowrap}
+.pnote{margin-top:14px;background:var(--pale);border-left:4px solid var(--sky);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--muted);line-height:1.65}
+.extras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.extra-c{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:box-shadow .2s,transform .2s}
+.extra-c:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+.ec-name{font-size:.88rem;font-weight:700;color:var(--navy)}
+.ec-sub{font-size:.73rem;color:var(--muted);margin-top:2px}
+.ec-price{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--blue);white-space:nowrap}
+.bk{display:inline-flex;align-items:center;gap:6px;background:var(--wa);color:#fff;padding:8px 14px;border-radius:8px;font-size:.75rem;font-weight:700;white-space:nowrap;flex-shrink:0;transition:background .18s;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+.bk:hover{background:var(--wa-dark)}
 
-.modal-submit {
-  width: 100%;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  background: var(--wa); color: #fff;
-  padding: 14px 20px; border-radius: var(--r-sm);
-  border: none; cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: .94rem; font-weight: 800;
-  box-shadow: 0 6px 20px rgba(37,211,102,.35);
-  transition: all .22s;
-  margin-top: 6px;
-}
-.modal-submit:hover {
-  background: var(--wa-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(37,211,102,.45);
-}
-.modal-note {
-  text-align: center; font-size: .73rem; color: var(--muted);
-  margin-top: 10px; line-height: 1.5;
-}
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.step-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:32px 24px;text-align:center;transition:transform .22s,box-shadow .22s}
+.step-card:hover{transform:translateY(-5px);box-shadow:var(--sh-lg)}
+.step-num{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--sky));color:#fff;font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 4px 16px rgba(21,80,176,.35)}
+.step-card h3{font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+.step-card p{font-size:.83rem;color:var(--muted);line-height:1.65}
 
-/* ═══════════════════════════════════
-   NAV
-═══════════════════════════════════ */
-#nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  background: rgba(255,255,255,.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  transition: box-shadow .3s;
-}
-#nav.scrolled { box-shadow: var(--sh); }
+/* AREAS */
+#areas{background:linear-gradient(150deg,var(--navy) 0%,#15398a 60%,var(--mid) 100%);padding:80px 24px}
+#areas .section-title{color:#fff}
+#areas .eyebrow{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)}
+#areas .section-body{color:rgba(255,255,255,.7)}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);padding:8px 16px;border-radius:50px;font-size:.82rem;font-weight:600;transition:all .18s}
+.chip:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
 
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 68px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-}
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.why-visual{background:linear-gradient(145deg,var(--navy),var(--sky));border-radius:24px;padding:48px 40px;color:#fff;position:relative;overflow:hidden}
+.why-visual::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05);right:-60px;bottom:-80px}
+.why-visual h2{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;line-height:1.2;margin-bottom:16px;position:relative}
+.why-visual p{font-size:.9rem;line-height:1.75;opacity:.82;position:relative}
+.why-badge{margin-top:28px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:14px 18px;position:relative}
+.why-badge .b-icon{font-size:1.5rem}
+.why-badge .b-num{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;line-height:1}
+.why-badge .b-sub{font-size:.7rem;opacity:.75;text-transform:uppercase;letter-spacing:.4px}
+.why-points{display:flex;flex-direction:column;gap:14px}
+.why-pt{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:18px 20px;transition:all .2s}
+.why-pt:hover{transform:translateX(5px);box-shadow:var(--sh);border-color:var(--light)}
+.why-pt-icon{width:40px;height:40px;flex-shrink:0;background:var(--pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.why-pt h4{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px}
+.why-pt p{font-size:.81rem;color:var(--muted);line-height:1.55}
 
-.nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.nav-logo-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-.nav-logo-placeholder {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy), var(--sky));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; flex-shrink: 0;
-}
-.nav-brand-text { line-height: 1.15; }
-.nav-brand-name { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 800; color: var(--navy); letter-spacing: .3px; }
-.nav-brand-tag { font-size: .68rem; color: var(--muted); letter-spacing: .5px; text-transform: uppercase; font-weight: 500; }
+/* CONTACT */
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.contact-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:36px 32px;box-shadow:var(--sh)}
+.contact-box h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.contact-box .sub{font-size:.86rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.contact-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.cr{display:flex;align-items:center;gap:12px;background:var(--off);border-radius:var(--r-sm);padding:12px 16px}
+.cr-icon{font-size:1rem;width:28px;text-align:center;flex-shrink:0}
+.cr-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.cr-val{font-size:.88rem;font-weight:700;color:var(--navy)}
+.wa-btn-full{display:flex;align-items:center;gap:10px;background:var(--wa);color:#fff;padding:15px 20px;border-radius:var(--r-sm);font-weight:700;font-size:.9rem;box-shadow:0 6px 18px rgba(37,211,102,.3);transition:all .22s;margin-bottom:10px}
+.wa-btn-full:hover{background:var(--wa-dark);transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,211,102,.4)}
+.wa-btn-full .wt{flex:1}
+.wa-btn-full .wt strong{display:block}
+.wa-btn-full .wt small{font-size:.75rem;opacity:.82;font-weight:500}
+.quick-ref{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:36px 32px;box-shadow:var(--sh)}
+.quick-ref h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:20px}
+.qr-list{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.qr-row{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--off);border-radius:8px;font-size:.86rem;gap:8px}
+.qr-row .name{font-weight:600;color:var(--navy)}
+.qr-row .price{font-weight:800;color:var(--blue);font-size:.88rem;white-space:nowrap}
+.wa-center{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--wa);color:#fff;padding:15px;border-radius:var(--r-sm);font-weight:700;font-size:.9rem;transition:all .22s;box-shadow:0 4px 16px rgba(37,211,102,.3);border:none;cursor:pointer;width:100%;font-family:'Plus Jakarta Sans',sans-serif}
+.wa-center:hover{background:var(--wa-dark);transform:translateY(-2px)}
 
-.nav-links { display: flex; gap: 6px; align-items: center; }
-.nav-links a { font-size: .84rem; font-weight: 600; color: var(--text); padding: 7px 13px; border-radius: 8px; transition: background .18s, color .18s; white-space: nowrap; }
-.nav-links a:hover { background: var(--pale); color: var(--blue); }
+/* FOOTER */
+footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.f-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.f-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2)}
+.f-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.3px}
+.f-desc{font-size:.84rem;opacity:.65;line-height:1.75;max-width:300px}
+.f-col h4{font-size:.73rem;font-weight:700;opacity:.5;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.f-col ul{display:flex;flex-direction:column;gap:9px}
+.f-col a{font-size:.84rem;color:rgba(255,255,255,.7);transition:color .18s}
+.f-col a:hover{color:var(--light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.78rem;opacity:.5}
 
-.nav-book {
-  display: flex; align-items: center; gap: 7px;
-  background: var(--wa); color: #fff !important;
-  padding: 10px 18px !important; border-radius: 50px !important;
-  font-weight: 700 !important; font-size: .84rem !important;
-  box-shadow: 0 4px 16px rgba(37,211,102,.35);
-  transition: background .2s, transform .15s, box-shadow .2s;
-}
-.nav-book:hover { background: var(--wa-dark) !important; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(37,211,102,.45); }
+/* FLOATING WA */
+.float-wa{position:fixed;bottom:24px;right:24px;z-index:800;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 6px 22px rgba(37,211,102,.5);animation:wa-pulse 2.8s infinite;transition:transform .2s}
+.float-wa:hover{transform:scale(1.1)}
+@keyframes wa-pulse{0%,100%{box-shadow:0 6px 22px rgba(37,211,102,.45)}50%{box-shadow:0 6px 36px rgba(37,211,102,.75)}}
 
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border-radius: 8px; background: none; border: none; -webkit-tap-highlight-color: transparent; }
-.hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: .3s; }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
 
-.mobile-menu { display: none; flex-direction: column; background: var(--white); border-top: 1px solid var(--border); padding: 16px 24px 24px; gap: 4px; }
-.mobile-menu.open { display: flex; }
-.mobile-menu a { font-size: .9rem; font-weight: 600; color: var(--text); padding: 12px 14px; border-radius: var(--r-sm); transition: background .18s; }
-.mobile-menu a:hover { background: var(--pale); color: var(--blue); }
-.mobile-menu .m-book { margin-top: 8px; background: var(--wa); color: #fff !important; text-align: center; border-radius: 50px !important; box-shadow: 0 4px 16px rgba(37,211,102,.3); font-weight: 700 !important; padding: 13px 14px !important; }
-
-/* ═══════════════════════════════════
-   HERO
-═══════════════════════════════════ */
-#home {
-  padding-top: 68px;
-  background: linear-gradient(160deg, var(--navy) 0%, #163a9e 55%, var(--mid) 100%);
-  position: relative; overflow: hidden; min-height: 100svh; display: flex; align-items: center;
-}
-#home::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px);
-  background-size: 36px 36px; pointer-events: none;
-}
-#home::after {
-  content: ''; position: absolute; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(33,150,243,.25) 0%, transparent 70%);
-  top: -100px; right: -100px; pointer-events: none;
-}
-
-.hero-wrap {
-  max-width: 1200px; margin: 0 auto; width: 100%; padding: 60px 24px 80px;
-  display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: center; position: relative; z-index: 1;
-}
-
-.hero-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
-  color: rgba(255,255,255,.9); padding: 6px 16px; border-radius: 50px;
-  font-size: .76rem; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 24px;
-}
-
-.hero-h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -.5px; margin-bottom: 20px; }
-.hero-h1 em { font-style: normal; background: linear-gradient(90deg, var(--light), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.78); line-height: 1.75; max-width: 500px; margin-bottom: 36px; font-weight: 400; }
-.hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
-
-.btn-wa-lg { display: inline-flex; align-items: center; gap: 9px; background: var(--wa); color: #fff; padding: 14px 26px; border-radius: 50px; font-weight: 700; font-size: .94rem; box-shadow: 0 6px 22px rgba(37,211,102,.4); transition: all .22s; }
-.btn-wa-lg:hover { background: var(--wa-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,.5); }
-
-.btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.35); color: #fff; padding: 14px 26px; border-radius: 50px; font-weight: 700; font-size: .94rem; transition: all .22s; }
-.btn-ghost:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.6); transform: translateY(-2px); }
-
-.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
-.hs { color: #fff; }
-.hs-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; line-height: 1; color: var(--light); }
-.hs-label { font-size: .73rem; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: .6px; margin-top: 2px; }
-
-.hero-card { background: rgba(255,255,255,.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.2); border-radius: 24px; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
-.hero-card-logo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,.3); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
-.hero-card-logo-placeholder { width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,.15); border: 3px solid rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
-.hero-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: #fff; }
-.hero-card p { font-size: .82rem; color: rgba(255,255,255,.7); line-height: 1.6; }
-.hero-card-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-.hchip { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .72rem; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
-
-/* ═══════════════════════════════════
-   SHARED SECTION STYLES
-═══════════════════════════════════ */
-.section { padding: 80px 24px; }
-.container { max-width: 1200px; margin: 0 auto; }
-.section-alt { background: var(--off); }
-
-.eyebrow { display: inline-flex; align-items: center; gap: 6px; background: var(--pale); color: var(--blue); padding: 5px 13px; border-radius: 50px; font-size: .72rem; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; margin-bottom: 14px; }
-.section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--navy); line-height: 1.15; letter-spacing: -.3px; margin-bottom: 12px; }
-.section-title span { color: var(--sky); }
-.section-body { font-size: .97rem; color: var(--muted); line-height: 1.8; max-width: 560px; margin-bottom: 48px; }
-
-/* ═══════════════════════════════════
-   SERVICES
-═══════════════════════════════════ */
-.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.svc-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 28px 24px; transition: transform .22s, box-shadow .22s, border-color .22s; cursor: default; position: relative; overflow: hidden; }
-.svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--sky)); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
-.svc-card:hover { transform: translateY(-5px); box-shadow: var(--sh-lg); border-color: var(--light); }
-.svc-card:hover::after { transform: scaleX(1); }
-.svc-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--pale); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 18px; }
-.svc-card h3 { font-size: .97rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-.svc-card p { font-size: .84rem; color: var(--muted); line-height: 1.65; }
-.svc-from { margin-top: 14px; font-size: .78rem; font-weight: 700; color: var(--blue); display: flex; align-items: center; gap: 4px; }
-
-/* ═══════════════════════════════════
-   PRICING
-═══════════════════════════════════ */
-.tabs-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-.tab-btn { padding: 9px 18px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--white); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: .8rem; font-weight: 700; cursor: pointer; transition: all .18s; -webkit-tap-highlight-color: transparent; }
-.tab-btn:hover { border-color: var(--sky); color: var(--blue); }
-.tab-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.tab-panel { display: none; }
-.tab-panel.active { display: block; animation: fadeUp .35s ease; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-
-.price-table-wrap { overflow-x: auto; border-radius: var(--r); box-shadow: var(--sh); -webkit-overflow-scrolling: touch; }
-table.pt { width: 100%; border-collapse: collapse; min-width: 480px; }
-table.pt thead tr { background: linear-gradient(90deg, var(--navy), var(--blue)); }
-table.pt thead th { padding: 14px 18px; text-align: left; color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; white-space: nowrap; }
-table.pt tbody tr:nth-child(even) td { background: var(--off); }
-table.pt tbody tr:hover td { background: var(--pale); }
-table.pt tbody tr:last-child td { border-bottom: none; }
-table.pt td { padding: 13px 18px; font-size: .88rem; border-bottom: 1px solid var(--border); }
-.pv { font-weight: 800; color: var(--blue); font-size: .92rem; white-space: nowrap; }
-.pnote { margin-top: 14px; background: var(--pale); border-left: 4px solid var(--sky); border-radius: 8px; padding: 12px 16px; font-size: .82rem; color: var(--muted); line-height: 1.65; }
-
-.extras-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
-.extra-c { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: box-shadow .2s, transform .2s; }
-.extra-c:hover { box-shadow: var(--sh); transform: translateY(-2px); }
-.ec-name { font-size: .88rem; font-weight: 700; color: var(--navy); }
-.ec-sub  { font-size: .73rem; color: var(--muted); margin-top: 2px; }
-.ec-price { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--blue); white-space: nowrap; }
-
-/* Book button */
-.bk {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--wa); color: #fff;
-  padding: 8px 14px; border-radius: 8px;
-  font-size: .75rem; font-weight: 700;
-  white-space: nowrap; flex-shrink: 0;
-  transition: background .18s;
-  border: none; cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.bk:hover { background: var(--wa-dark); }
-
-/* ═══════════════════════════════════
-   HOW IT WORKS
-═══════════════════════════════════ */
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-.step-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 32px 24px; text-align: center; transition: transform .22s, box-shadow .22s; }
-.step-card:hover { transform: translateY(-5px); box-shadow: var(--sh-lg); }
-.step-num { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--sky)); color: #fff; font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; box-shadow: 0 4px 16px rgba(21,80,176,.35); }
-.step-card h3 { font-size: .95rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-.step-card p  { font-size: .83rem; color: var(--muted); line-height: 1.65; }
-
-/* ═══════════════════════════════════
-   AREAS
-═══════════════════════════════════ */
-#areas { background: linear-gradient(150deg, var(--navy) 0%, #15398a 60%, var(--mid) 100%); padding: 80px 24px; }
-#areas .section-title { color: #fff; }
-#areas .eyebrow { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
-#areas .section-body { color: rgba(255,255,255,.7); }
-.chips-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
-.chip { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); padding: 8px 16px; border-radius: 50px; font-size: .82rem; font-weight: 600; transition: all .18s; }
-.chip:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
-
-/* ═══════════════════════════════════
-   WHY US
-═══════════════════════════════════ */
-.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-.why-visual { background: linear-gradient(145deg, var(--navy), var(--sky)); border-radius: 24px; padding: 48px 40px; color: #fff; position: relative; overflow: hidden; }
-.why-visual::before { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,.05); right: -60px; bottom: -80px; }
-.why-visual h2 { font-family: 'Syne', sans-serif; font-size: 1.7rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; position: relative; }
-.why-visual p { font-size: .9rem; line-height: 1.75; opacity: .82; position: relative; }
-.why-badge { margin-top: 28px; display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); border-radius: 12px; padding: 14px 18px; position: relative; }
-.why-badge .b-icon { font-size: 1.5rem; }
-.why-badge .b-num  { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; line-height: 1; }
-.why-badge .b-sub  { font-size: .7rem; opacity: .75; text-transform: uppercase; letter-spacing: .4px; }
-.why-points { display: flex; flex-direction: column; gap: 14px; }
-.why-pt { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 18px 20px; transition: all .2s; }
-.why-pt:hover { transform: translateX(5px); box-shadow: var(--sh); border-color: var(--light); }
-.why-pt-icon { width: 40px; height: 40px; flex-shrink: 0; background: var(--pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-.why-pt h4 { font-size: .9rem; font-weight: 800; color: var(--navy); margin-bottom: 3px; }
-.why-pt p  { font-size: .81rem; color: var(--muted); line-height: 1.55; }
-
-/* ═══════════════════════════════════
-   BOOK / CONTACT
-═══════════════════════════════════ */
-.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
-.contact-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 36px 32px; box-shadow: var(--sh); }
-.contact-box h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
-.contact-box .sub { font-size: .86rem; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
-.contact-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-.cr { display: flex; align-items: center; gap: 12px; background: var(--off); border-radius: var(--r-sm); padding: 12px 16px; }
-.cr-icon { font-size: 1rem; width: 28px; text-align: center; flex-shrink: 0; }
-.cr-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
-.cr-val   { font-size: .88rem; font-weight: 700; color: var(--navy); }
-.wa-btn-full { display: flex; align-items: center; gap: 10px; background: var(--wa); color: #fff; padding: 15px 20px; border-radius: var(--r-sm); font-weight: 700; font-size: .9rem; box-shadow: 0 6px 18px rgba(37,211,102,.3); transition: all .22s; margin-bottom: 10px; }
-.wa-btn-full:hover { background: var(--wa-dark); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,211,102,.4); }
-.wa-btn-full .wt { flex: 1; }
-.wa-btn-full .wt strong { display: block; }
-.wa-btn-full .wt small { font-size: .75rem; opacity: .82; font-weight: 500; }
-.quick-ref { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 36px 32px; box-shadow: var(--sh); }
-.quick-ref h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
-.qr-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
-.qr-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: var(--off); border-radius: 8px; font-size: .86rem; gap: 8px; }
-.qr-row .name { font-weight: 600; color: var(--navy); }
-.qr-row .price { font-weight: 800; color: var(--blue); font-size: .88rem; white-space: nowrap; }
-.wa-center { display: flex; align-items: center; justify-content: center; gap: 9px; background: var(--wa); color: #fff; padding: 15px; border-radius: var(--r-sm); font-weight: 700; font-size: .9rem; transition: all .22s; box-shadow: 0 4px 16px rgba(37,211,102,.3); border: none; cursor: pointer; width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
-.wa-center:hover { background: var(--wa-dark); transform: translateY(-2px); }
-
-/* ═══════════════════════════════════
-   FOOTER
-═══════════════════════════════════ */
-footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-.f-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.f-logo  { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.2); }
-.f-name { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 800; letter-spacing: .3px; }
-.f-desc { font-size: .84rem; opacity: .65; line-height: 1.75; max-width: 300px; }
-.f-col h4 { font-size: .73rem; font-weight: 700; opacity: .5; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px; }
-.f-col ul { display: flex; flex-direction: column; gap: 9px; }
-.f-col a { font-size: .84rem; color: rgba(255,255,255,.7); transition: color .18s; }
-.f-col a:hover { color: var(--light); }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .78rem; opacity: .5; }
-
-/* ═══════════════════════════════════
-   FLOATING WA
-═══════════════════════════════════ */
-.float-wa { position: fixed; bottom: 24px; right: 24px; z-index: 800; width: 56px; height: 56px; border-radius: 50%; background: var(--wa); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; box-shadow: 0 6px 22px rgba(37,211,102,.5); animation: wa-pulse 2.8s infinite; transition: transform .2s; }
-.float-wa:hover { transform: scale(1.1); }
-@keyframes wa-pulse { 0%,100%{box-shadow:0 6px 22px rgba(37,211,102,.45)} 50%{box-shadow:0 6px 36px rgba(37,211,102,.75)} }
-
-/* ═══════════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════════ */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-
-/* ═══════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════ */
-
-/* Tablet: ≤ 960px */
-@media (max-width: 960px) {
-  .hero-wrap { grid-template-columns: 1fr; }
-  .hero-card { display: none; }
-  .why-grid  { grid-template-columns: 1fr; }
-  .book-grid { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
-}
-
-/* Mobile: ≤ 768px */
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .hero-wrap { padding: 40px 0 60px; }
-  .hero-h1   { font-size: clamp(2rem, 7vw, 2.8rem); }
-  .hero-sub  { font-size: .93rem; }
-  .hero-btns { gap: 10px; }
-  .btn-wa-lg, .btn-ghost { padding: 12px 20px; font-size: .86rem; }
-  .section   { padding: 60px 20px; }
-  #areas     { padding: 60px 20px; }
-  .services-grid { grid-template-columns: 1fr; }
-  .steps-grid    { grid-template-columns: 1fr 1fr; }
-  .extras-grid   { grid-template-columns: 1fr; }
-}
-
-/* Small mobile: ≤ 540px */
-@media (max-width: 540px) {
-  .hero-wrap { padding: 36px 0 52px; }
-  .hero-h1   { font-size: 2rem; }
-  .hero-sub  { font-size: .88rem; }
-  .hero-stats { gap: 20px; }
-  .hs-num   { font-size: 1.6rem; }
-  .hero-btns { flex-direction: column; }
-  .btn-wa-lg, .btn-ghost { width: 100%; justify-content: center; }
-  .steps-grid    { grid-template-columns: 1fr; }
-  .tabs-row  { gap: 6px; }
-  .tab-btn   { font-size: .75rem; padding: 7px 14px; }
-  table.pt thead th, table.pt td { padding: 10px 12px; font-size: .8rem; }
-  .contact-box, .quick-ref { padding: 24px 18px; }
-  .modal-box { border-radius: 18px; }
-  .modal-head { padding: 18px 18px 14px; }
-  .modal-body { padding: 18px 18px 22px; }
-  .why-visual { padding: 32px 24px; }
-  .why-visual h2 { font-size: 1.4rem; }
-  .footer-top { grid-template-columns: 1fr; gap: 28px; }
-}
-
-/* Very small: ≤ 360px */
-@media (max-width: 360px) {
-  .nav-brand-name { font-size: .82rem; }
-  .nav-brand-tag  { display: none; }
-  .nav-logo-img   { width: 36px; height: 36px; }
-}
+/* RESPONSIVE */
+@media(max-width:960px){.hero-wrap{grid-template-columns:1fr}.hero-card{display:none}.why-grid{grid-template-columns:1fr}.book-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.hero-wrap{padding:40px 0 60px}.hero-h1{font-size:clamp(2rem,7vw,2.8rem)}.hero-sub{font-size:.93rem}.hero-btns{gap:10px}.btn-wa-lg,.btn-ghost{padding:12px 20px;font-size:.86rem}.section{padding:60px 20px}#areas{padding:60px 20px}.services-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr 1fr}.extras-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.hero-wrap{padding:36px 0 52px}.hero-h1{font-size:2rem}.hero-sub{font-size:.88rem}.hero-stats{gap:20px}.hs-num{font-size:1.6rem}.hero-btns{flex-direction:column}.btn-wa-lg,.btn-ghost{width:100%;justify-content:center}.steps-grid{grid-template-columns:1fr}.acc-trigger{padding:14px 16px}.acc-body{padding:0 16px 18px}table.pt thead th,table.pt td{padding:10px 12px;font-size:.8rem}.contact-box,.quick-ref{padding:24px 18px}.modal-box{border-radius:18px}.modal-head{padding:18px 18px 14px}.modal-body{padding:18px 18px 22px}.form-row{grid-template-columns:1fr}.why-visual{padding:32px 24px}.why-visual h2{font-size:1.4rem}.footer-top{grid-template-columns:1fr;gap:28px}}
+@media(max-width:360px){.nav-brand-name{font-size:.82rem}.nav-brand-tag{display:none}.nav-logo-img{width:36px;height:36px}}
 </style>
 </head>
 <body>
 
-<!-- ═══════ BOOKING MODAL ═══════ -->
+<!-- BOOKING MODAL -->
 <div class="modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-box">
     <div class="modal-head">
       <div class="modal-head-text">
         <h3 id="modalTitle">Complete Your Booking</h3>
-        <p>Fill in your details — WhatsApp will open with your booking ready to send.</p>
+        <p>Fill in your details &#x2014; WhatsApp will open with your booking ready to send.</p>
         <div class="modal-service-badge" id="modalServiceBadge">Service</div>
       </div>
       <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
@@ -531,7 +277,6 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       <div class="form-row">
         <div class="form-group">
           <label for="fieldDate">Preferred Date</label>
-          <!-- min is set dynamically via JS to today -->
           <input type="date" id="fieldDate" />
         </div>
         <div class="form-group">
@@ -552,14 +297,13 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   </div>
 </div>
 
-<!-- ═══════ NAV ═══════ -->
+<!-- NAV -->
 <header>
 <nav id="nav">
   <div class="nav-inner">
     <a href="#home" class="nav-brand">
-      <!-- Replace nyumbanilogo.png with your actual logo file name -->
       <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services logo" class="nav-logo-img"
-        onerror="this.style.display='none'; document.querySelector('.nav-logo-placeholder').style.display='flex';" />
+        onerror="this.style.display='none';document.querySelector('.nav-logo-placeholder').style.display='flex';" />
       <div class="nav-logo-placeholder" style="display:none;">&#x1F3E0;</div>
       <div class="nav-brand-text">
         <div class="nav-brand-name">Nyumbani Cleaning</div>
@@ -574,9 +318,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       <li><a href="#why">Why Us</a></li>
       <li><a href="https://wa.me/254118624445?text=Hi!%20I%20want%20to%20book%20a%20cleaning%20service." target="_blank" class="nav-book">&#x1F4AC; Book Now</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services" onclick="closeMobile()">Services</a>
@@ -590,13 +332,13 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
 </nav>
 </header>
 
-<!-- ═══════ HERO ═══════ -->
+<!-- HERO -->
 <section id="home">
   <div class="hero-wrap container">
     <div class="hero-left">
       <div class="hero-pill">&#x1F3E0; Nairobi's Trusted Cleaning Team</div>
       <h1 class="hero-h1">A <em>Clean Home,</em><br>A Better Life.</h1>
-      <p class="hero-sub">Professional cleaning services across Nairobi and surrounding areas. Subscriptions, deep cleans, fumigation, laundry &amp; more — all booked via WhatsApp.</p>
+      <p class="hero-sub">Professional cleaning services across Nairobi and surrounding areas. Subscriptions, deep cleans, fumigation, laundry &amp; more &#x2014; all booked via WhatsApp.</p>
       <div class="hero-btns">
         <a href="https://wa.me/254118624445?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%20would%20like%20to%20book%20a%20service." target="_blank" class="btn-wa-lg">&#x1F4AC; Book on WhatsApp</a>
         <a href="#pricing" class="btn-ghost">See Pricing &#x2193;</a>
@@ -609,7 +351,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
     </div>
     <div class="hero-card">
       <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services" class="hero-card-logo"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
       <div class="hero-card-logo-placeholder" style="display:none;">&#x1F3E0;</div>
       <h3>Nyumbani Cleaning Services</h3>
       <p>Professional. Reliable. Affordable.<br>Serving all of Nairobi.</p>
@@ -623,178 +365,227 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   </div>
 </section>
 
-<!-- ═══════ SERVICES ═══════ -->
+<!-- SERVICES -->
 <section class="section section-alt" id="services">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; What We Offer</div>
     <h2 class="section-title reveal">Our <span>Services</span></h2>
-    <p class="section-body reveal">From quick general cleans to full deep cleans, fumigation, laundry, and subscriptions — we handle every need professionally.</p>
+    <p class="section-body reveal">From quick general cleans to full deep cleans, fumigation, laundry, and subscriptions &#x2014; we handle every need professionally.</p>
     <div class="services-grid">
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F4C5;</div><h3>Subscription Packages</h3><p>Regular weekly cleaning — Basic, Half Day, Full Day, or Daily. Consistent care for your home every week.</p><div class="svc-from">&#x2736; From KES 4,000 / month</div></div>
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F9F9;</div><h3>Deep Cleaning</h3><p>Thorough top-to-bottom cleaning for empty or occupied homes of any size — from bedsitters to 5-bedrooms.</p><div class="svc-from">&#x2736; From KES 3,000</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F4C5;</div><h3>Subscription Packages</h3><p>Regular weekly cleaning &#x2014; Basic, Half Day, Full Day, or Daily. Consistent care for your home every week.</p><div class="svc-from">&#x2736; From KES 4,000 / month</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F9F9;</div><h3>Deep Cleaning</h3><p>Thorough top-to-bottom cleaning for empty or occupied homes of any size &#x2014; from bedsitters to 5-bedrooms.</p><div class="svc-from">&#x2736; From KES 3,000</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F3E0;</div><h3>General Cleaning</h3><p>Everyday home cleaning priced by room or flat-rate by apartment type. Quick, clean, affordable.</p><div class="svc-from">&#x2736; From KES 250 / room</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F6CB;&#xFE0F;</div><h3>Sofa, Mattress &amp; Carpet</h3><p>Professional fabric and upholstery cleaning for mattresses, sofas, bed frames, and carpets.</p><div class="svc-from">&#x2736; From KES 500 / seater</div></div>
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F455;</div><h3>Laundry &amp; Extra Services</h3><p>Laundry baskets, ironing, folding, shoe wiping, and cooking sessions — monthly or per visit.</p><div class="svc-from">&#x2736; From KES 299</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F455;</div><h3>Laundry &amp; Extra Services</h3><p>Laundry baskets, ironing, folding, shoe wiping, and cooking sessions &#x2014; monthly or per visit.</p><div class="svc-from">&#x2736; From KES 299</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F41B;</div><h3>Fumigation</h3><p>Safe and effective pest and insect fumigation treatments for all house sizes across Nairobi.</p><div class="svc-from">&#x2736; From KES 2,500</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ PRICING ═══════ -->
+<!-- PRICING — ACCORDION -->
 <section class="section" id="pricing">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; Transparent Pricing</div>
     <h2 class="section-title reveal">Clear, <span>Honest Rates</span></h2>
-    <p class="section-body reveal">No hidden fees. Browse each service category and book directly on WhatsApp in one tap.</p>
+    <p class="section-body reveal">No hidden fees. Click any category to expand it, then book directly on WhatsApp in one tap.</p>
 
-    <div class="tabs-row" id="tabsRow">
-      <button class="tab-btn active" data-tab="subscriptions">&#x1F4C5; Subscriptions</button>
-      <button class="tab-btn" data-tab="deep">&#x1F9F9; Deep Cleaning</button>
-      <button class="tab-btn" data-tab="general">&#x1F3E0; General Cleaning</button>
-      <button class="tab-btn" data-tab="sofa">&#x1F6CB;&#xFE0F; Sofa &amp; Mattress</button>
-      <button class="tab-btn" data-tab="extras">&#x1F455; Extras &amp; Laundry</button>
-      <button class="tab-btn" data-tab="fumigation">&#x1F41B; Fumigation</button>
-    </div>
+    <div class="accordion" id="accordion">
 
-    <!-- Subscriptions -->
-    <div class="tab-panel active" id="panel-subscriptions">
-      <div class="price-table-wrap">
-        <table class="pt">
-          <thead><tr><th>Package</th><th>Frequency</th><th>Coverage</th><th>Price / Month</th><th>Book</th></tr></thead>
-          <tbody>
-            <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Basic Subscription — KES 4,000/month (Bedsitter & 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('📅 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('📅 Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pnote">&#x26A0;&#xFE0F; Rates are per cleaner and do <strong>not</strong> include cleaning equipment or detergents.</div>
-    </div>
-
-    <!-- Deep Cleaning -->
-    <div class="tab-panel" id="panel-deep">
-      <div class="price-table-wrap">
-        <table class="pt">
-          <thead><tr><th>House Type</th><th>Empty House</th><th>Occupied House</th><th>Book</th></tr></thead>
-          <tbody>
-            <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pnote">&#x2705; Post-construction cleaning available — <a href="https://wa.me/254118624445?text=Hi!%20I%27d%20like%20a%20post-construction%20cleaning%20quote." target="_blank" style="color:var(--sky)">contact us for a quote</a>.</div>
-    </div>
-
-    <!-- General Cleaning -->
-    <div class="tab-panel" id="panel-general">
-      <div class="price-table-wrap">
-        <table class="pt">
-          <thead><tr><th>House Type</th><th>Price</th><th>Book</th></tr></thead>
-          <tbody>
-            <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Sofa & Mattress -->
-    <div class="tab-panel" id="panel-sofa">
-      <div class="price-table-wrap">
-        <table class="pt">
-          <thead><tr><th>Item</th><th>Size</th><th>Price</th><th>Book</th></tr></thead>
-          <tbody>
-            <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 4×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 5×6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 6×6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 4×6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 5×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 6×6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('🛋️ Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m²</td><td><button class="bk" onclick="openModal('🛋️ Carpet Cleaning — KES 40/m²')">&#x1F4AC; Book</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Extras & Laundry -->
-    <div class="tab-panel" id="panel-extras">
-      <div class="extras-grid">
-        <div class="extra-c">
-          <div><div class="ec-name">&#x1F455; Laundry Basket</div><div class="ec-sub">Per basket</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('👕 Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-        </div>
-        <div class="extra-c">
-          <div><div class="ec-name">&#x1F454; Folding Clothes</div><div class="ec-sub">Per session</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('👔 Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-        </div>
-        <div class="extra-c">
-          <div><div class="ec-name">&#x1F525; Ironing</div><div class="ec-sub">KES 1,600/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('🔥 Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-        </div>
-        <div class="extra-c">
-          <div><div class="ec-name">&#x1F373; Cooking</div><div class="ec-sub">KES 2,000/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('🍳 Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-        </div>
-        <div class="extra-c">
-          <div><div class="ec-name">&#x1F45F; Shoe Wiping</div><div class="ec-sub">KES 1,200/month</div></div>
-          <div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('👟 Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+      <!-- 1 Subscriptions -->
+      <div class="acc-item open" id="acc-subscriptions">
+        <button class="acc-trigger" onclick="toggleAcc('subscriptions')" aria-expanded="true">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F4C5;</div>
+            <div><div class="acc-title">Subscription Packages</div><div class="acc-sub">Weekly cleaning plans &#x2014; from KES 4,000/month</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="price-table-wrap">
+            <table class="pt">
+              <thead><tr><th>Package</th><th>Frequency</th><th>Coverage</th><th>Price / Month</th><th>Book</th></tr></thead>
+              <tbody>
+                <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Basic Subscription — KES 4,000/month (Bedsitter & 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('📅 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('📅 Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pnote">&#x26A0;&#xFE0F; Rates are per cleaner and do <strong>not</strong> include cleaning equipment or detergents.</div>
         </div>
       </div>
-    </div>
 
-    <!-- Fumigation -->
-    <div class="tab-panel" id="panel-fumigation">
-      <div class="price-table-wrap">
-        <table class="pt">
-          <thead><tr><th>House Size</th><th>Price</th><th>Book</th></tr></thead>
-          <tbody>
-            <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
-            <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
-          </tbody>
-        </table>
+      <!-- 2 Deep Cleaning -->
+      <div class="acc-item" id="acc-deep">
+        <button class="acc-trigger" onclick="toggleAcc('deep')" aria-expanded="false">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F9F9;</div>
+            <div><div class="acc-title">Deep Cleaning</div><div class="acc-sub">Empty or occupied homes &#x2014; from KES 3,000</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="price-table-wrap">
+            <table class="pt">
+              <thead><tr><th>House Type</th><th>Empty House</th><th>Occupied House</th><th>Book</th></tr></thead>
+              <tbody>
+                <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pnote">&#x2705; Post-construction cleaning available &#x2014; <a href="https://wa.me/254118624445?text=Hi!%20I%27d%20like%20a%20post-construction%20cleaning%20quote." target="_blank" style="color:var(--sky)">contact us for a quote</a>.</div>
+        </div>
       </div>
-    </div>
+
+      <!-- 3 General Cleaning -->
+      <div class="acc-item" id="acc-general">
+        <button class="acc-trigger" onclick="toggleAcc('general')" aria-expanded="false">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F3E0;</div>
+            <div><div class="acc-title">General Cleaning</div><div class="acc-sub">By room or flat-rate &#x2014; from KES 250/room</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="price-table-wrap">
+            <table class="pt">
+              <thead><tr><th>House Type</th><th>Price</th><th>Book</th></tr></thead>
+              <tbody>
+                <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Sofa & Mattress -->
+      <div class="acc-item" id="acc-sofa">
+        <button class="acc-trigger" onclick="toggleAcc('sofa')" aria-expanded="false">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F6CB;&#xFE0F;</div>
+            <div><div class="acc-title">Sofa, Mattress &amp; Carpet</div><div class="acc-sub">Upholstery &amp; fabric cleaning &#x2014; from KES 500/seater</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="price-table-wrap">
+            <table class="pt">
+              <thead><tr><th>Item</th><th>Size</th><th>Price</th><th>Book</th></tr></thead>
+              <tbody>
+                <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 4×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 5×6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 6×6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 4×6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 5×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 6×6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('🛋️ Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m&#xB2;</td><td><button class="bk" onclick="openModal('🛋️ Carpet Cleaning — KES 40/m²')">&#x1F4AC; Book</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Extras & Laundry -->
+      <div class="acc-item" id="acc-extras">
+        <button class="acc-trigger" onclick="toggleAcc('extras')" aria-expanded="false">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F455;</div>
+            <div><div class="acc-title">Laundry &amp; Extra Services</div><div class="acc-sub">Ironing, cooking, folding &amp; more &#x2014; from KES 299</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="extras-grid">
+            <div class="extra-c">
+              <div><div class="ec-name">&#x1F455; Laundry Basket</div><div class="ec-sub">Per basket</div></div>
+              <div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('👕 Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+            </div>
+            <div class="extra-c">
+              <div><div class="ec-name">&#x1F454; Folding Clothes</div><div class="ec-sub">Per session</div></div>
+              <div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('👔 Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+            </div>
+            <div class="extra-c">
+              <div><div class="ec-name">&#x1F525; Ironing</div><div class="ec-sub">KES 1,600/month</div></div>
+              <div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('🔥 Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+            </div>
+            <div class="extra-c">
+              <div><div class="ec-name">&#x1F373; Cooking</div><div class="ec-sub">KES 2,000/month</div></div>
+              <div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('🍳 Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+            </div>
+            <div class="extra-c">
+              <div><div class="ec-name">&#x1F45F; Shoe Wiping</div><div class="ec-sub">KES 1,200/month</div></div>
+              <div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('👟 Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Fumigation -->
+      <div class="acc-item" id="acc-fumigation">
+        <button class="acc-trigger" onclick="toggleAcc('fumigation')" aria-expanded="false">
+          <div class="acc-trigger-left">
+            <div class="acc-emoji">&#x1F41B;</div>
+            <div><div class="acc-title">Fumigation</div><div class="acc-sub">Pest &amp; insect control for all house sizes &#x2014; from KES 2,500</div></div>
+          </div>
+          <div class="acc-chevron">&#x25BC;</div>
+        </button>
+        <div class="acc-body">
+          <div class="price-table-wrap">
+            <table class="pt">
+              <thead><tr><th>House Size</th><th>Price</th><th>Book</th></tr></thead>
+              <tbody>
+                <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
+                <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /accordion -->
   </div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
+<!-- HOW IT WORKS -->
 <section class="section section-alt" id="how">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; Simple Process</div>
     <h2 class="section-title reveal">Book in <span>4 Easy Steps</span></h2>
     <p class="section-body reveal">Getting your home cleaned is as easy as sending a WhatsApp message. No apps, no portals.</p>
     <div class="steps-grid">
-      <div class="step-card reveal"><div class="step-num">1</div><h3>Choose Your Service</h3><p>Browse our pricing above and pick exactly what your home needs — deep clean, subscription, fumigation, or more.</p></div>
-      <div class="step-card reveal"><div class="step-num">2</div><h3>Click Book</h3><p>Tap any "Book" button and fill in your name, area, and preferred date — takes under 30 seconds.</p></div>
-      <div class="step-card reveal"><div class="step-num">3</div><h3>Send on WhatsApp</h3><p>WhatsApp opens with all your details ready. Just press Send — we'll confirm your booking immediately.</p></div>
+      <div class="step-card reveal"><div class="step-num">1</div><h3>Choose Your Service</h3><p>Browse our pricing above and pick exactly what your home needs &#x2014; deep clean, subscription, fumigation, or more.</p></div>
+      <div class="step-card reveal"><div class="step-num">2</div><h3>Click Book</h3><p>Tap any "Book" button and fill in your name, area, and preferred date &#x2014; takes under 30 seconds.</p></div>
+      <div class="step-card reveal"><div class="step-num">3</div><h3>Send on WhatsApp</h3><p>WhatsApp opens with all your details ready. Just press Send &#x2014; we'll confirm your booking immediately.</p></div>
       <div class="step-card reveal"><div class="step-num">4</div><h3>Enjoy a Spotless Home</h3><p>Our trained cleaners arrive on time and deliver a thorough, professional clean you can count on.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ AREAS ═══════ -->
+<!-- AREAS -->
 <section id="areas">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; We Come to You</div>
     <h2 class="section-title reveal" style="color:#fff">Serving All of <span style="color:var(--light)">Nairobi</span></h2>
-    <p class="section-body reveal">We cover Nairobi and surrounding areas. Don't see yours? Just ask — we likely cover it too.</p>
+    <p class="section-body reveal">We cover Nairobi and surrounding areas. Don't see yours? Just ask &#x2014; we likely cover it too.</p>
     <div class="chips-wrap">
       <div class="chip reveal">&#x1F4CD; Utawala</div><div class="chip reveal">&#x1F4CD; Kawangware</div>
       <div class="chip reveal">&#x1F4CD; Ngong</div><div class="chip reveal">&#x1F4CD; Karen</div>
@@ -810,7 +601,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   </div>
 </section>
 
-<!-- ═══════ WHY US ═══════ -->
+<!-- WHY US -->
 <section class="section" id="why">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; Why Choose Us</div>
@@ -818,7 +609,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
     <div class="why-grid">
       <div class="why-visual reveal">
         <h2>We Make Nairobi Homes Shine</h2>
-        <p>Nyumbani Cleaning Services is built on reliability, professionalism, and genuine care. Every home we clean gets the full treatment — no shortcuts.</p>
+        <p>Nyumbani Cleaning Services is built on reliability, professionalism, and genuine care. Every home we clean gets the full treatment &#x2014; no shortcuts.</p>
         <div class="why-badge">
           <div class="b-icon">&#x2B50;</div>
           <div><div class="b-num">Top Rated</div><div class="b-sub">Nairobi Cleaning Service</div></div>
@@ -826,16 +617,16 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       </div>
       <ul class="why-points">
         <li class="why-pt reveal"><div class="why-pt-icon">&#x2705;</div><div><h4>Trusted &amp; Vetted Cleaners</h4><p>All staff are background-checked and trained for residential cleaning. Your home is in safe hands.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x26A1;</div><div><h4>Flexible Scheduling</h4><p>One-time deep cleans or weekly subscriptions — on your schedule, at your convenience.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4B0;</div><div><h4>Transparent, Fair Pricing</h4><p>No surprises. All rates are clearly listed — you know what you're paying before we arrive.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x26A1;</div><div><h4>Flexible Scheduling</h4><p>One-time deep cleans or weekly subscriptions &#x2014; on your schedule, at your convenience.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4B0;</div><div><h4>Transparent, Fair Pricing</h4><p>No surprises. All rates are clearly listed &#x2014; you know what you're paying before we arrive.</p></div></li>
         <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4F1;</div><div><h4>Easy WhatsApp Booking</h4><p>No apps or portals needed. Just message us on WhatsApp and we handle everything from there.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F5FA;&#xFE0F;</div><div><h4>Wide Nairobi Coverage</h4><p>We cover 18+ areas across Nairobi and its surroundings — from Karen to Thika Road and beyond.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F5FA;&#xFE0F;</div><div><h4>Wide Nairobi Coverage</h4><p>We cover 18+ areas across Nairobi and its surroundings &#x2014; from Karen to Thika Road and beyond.</p></div></li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ═══════ BOOK / CONTACT ═══════ -->
+<!-- CONTACT -->
 <section class="section section-alt" id="book">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; Get In Touch</div>
@@ -853,12 +644,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
         </div>
         <a href="https://wa.me/254118624445?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%27d%20like%20to%20book%20a%20service." target="_blank" class="wa-btn-full">
           <span style="font-size:1.3rem">&#x1F4AC;</span>
-          <span class="wt"><strong>Message on WhatsApp</strong><small>+254 118 624 445 — Tap to open chat</small></span>
+          <span class="wt"><strong>Message on WhatsApp</strong><small>+254 118 624 445 &#x2014; Tap to open chat</small></span>
           <span>&#x2192;</span>
         </a>
         <a href="https://wa.me/254728315732?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%27d%20like%20to%20book%20a%20service." target="_blank" class="wa-btn-full" style="background:#1a8a7a">
           <span style="font-size:1.3rem">&#x1F4AC;</span>
-          <span class="wt"><strong>Alternate Number</strong><small>0728 315 732 — Tap to open chat</small></span>
+          <span class="wt"><strong>Alternate Number</strong><small>0728 315 732 &#x2014; Tap to open chat</small></span>
           <span>&#x2192;</span>
         </a>
       </div>
@@ -869,12 +660,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
           <div class="qr-row"><span class="name">&#x1F3E0; 1BR Deep Clean</span><span class="price">KES 4,000</span></div>
           <div class="qr-row"><span class="name">&#x1F4C5; Basic Subscription</span><span class="price">KES 4,000/mo</span></div>
           <div class="qr-row"><span class="name">&#x1F6CB;&#xFE0F; Sofa (per seater)</span><span class="price">KES 500</span></div>
-          <div class="qr-row"><span class="name">&#x1F6CF;&#xFE0F; Mattress 4×6</span><span class="price">KES 2,500</span></div>
+          <div class="qr-row"><span class="name">&#x1F6CF;&#xFE0F; Mattress 4&#xD7;6</span><span class="price">KES 2,500</span></div>
           <div class="qr-row"><span class="name">&#x1F455; Laundry Basket</span><span class="price">KES 499</span></div>
           <div class="qr-row"><span class="name">&#x1F41B; Fumigation (Studio)</span><span class="price">KES 2,500</span></div>
           <div class="qr-row"><span class="name">&#x1F3E0; General Studio</span><span class="price">KES 999</span></div>
         </div>
-        <button class="wa-center" onclick="openModal('General Enquiry — Any Service')">
+        <button class="wa-center" onclick="openModal('General Enquiry &#x2014; Any Service')">
           &#x1F4AC; Book Any Service via WhatsApp
         </button>
       </div>
@@ -882,7 +673,7 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
   </div>
 </section>
 
-<!-- ═══════ FOOTER ═══════ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -896,12 +687,12 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
       <div class="f-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#pricing" onclick="switchTab('subscriptions')">Subscription Packages</a></li>
-          <li><a href="#pricing" onclick="switchTab('deep')">Deep Cleaning</a></li>
-          <li><a href="#pricing" onclick="switchTab('general')">General Cleaning</a></li>
-          <li><a href="#pricing" onclick="switchTab('sofa')">Sofa &amp; Mattress</a></li>
-          <li><a href="#pricing" onclick="switchTab('extras')">Laundry &amp; Extras</a></li>
-          <li><a href="#pricing" onclick="switchTab('fumigation')">Fumigation</a></li>
+          <li><a href="#pricing" onclick="openAcc('subscriptions')">Subscription Packages</a></li>
+          <li><a href="#pricing" onclick="openAcc('deep')">Deep Cleaning</a></li>
+          <li><a href="#pricing" onclick="openAcc('general')">General Cleaning</a></li>
+          <li><a href="#pricing" onclick="openAcc('sofa')">Sofa &amp; Mattress</a></li>
+          <li><a href="#pricing" onclick="openAcc('extras')">Laundry &amp; Extras</a></li>
+          <li><a href="#pricing" onclick="openAcc('fumigation')">Fumigation</a></li>
         </ul>
       </div>
       <div class="f-col">
@@ -925,169 +716,129 @@ footer { background: var(--navy); color: #fff; padding: 56px 24px 28px; }
 <a href="https://wa.me/254118624445?text=Hello%20Nyumbani!%20I%27d%20like%20to%20book%20a%20cleaning%20service." target="_blank" class="float-wa" title="WhatsApp Us">&#x1F4AC;</a>
 
 <script>
-/* ── Set minimum date to today (no past dates) ── */
-(function() {
-  var today = new Date();
-  var yyyy  = today.getFullYear();
-  var mm    = String(today.getMonth() + 1).padStart(2, '0');
-  var dd    = String(today.getDate()).padStart(2, '0');
-  document.getElementById('fieldDate').min = yyyy + '-' + mm + '-' + dd;
+/* ── Min date = today ── */
+(function(){
+  var t=new Date();
+  document.getElementById('fieldDate').min=
+    t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
 })();
 
-/* ── NAV scroll shadow ── */
-window.addEventListener('scroll', function() {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+/* ── NAV shadow ── */
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>10);
 });
 
 /* ── Hamburger ── */
-var ham = document.getElementById('hamburger');
-var mob = document.getElementById('mobileMenu');
-ham.addEventListener('click', function() {
-  ham.classList.toggle('open');
-  mob.classList.toggle('open');
-});
-function closeMobile() {
-  ham.classList.remove('open');
-  mob.classList.remove('open');
-}
-
-/* ── Tabs ── */
-document.getElementById('tabsRow').addEventListener('click', function(e) {
-  var btn = e.target.closest('.tab-btn');
-  if (!btn) return;
-  switchTab(btn.dataset.tab);
-});
-function switchTab(id) {
-  document.querySelectorAll('.tab-btn').forEach(function(b) {
-    b.classList.toggle('active', b.dataset.tab === id);
-  });
-  document.querySelectorAll('.tab-panel').forEach(function(p) {
-    p.classList.toggle('active', p.id === 'panel-' + id);
-  });
-}
+var ham=document.getElementById('hamburger');
+var mob=document.getElementById('mobileMenu');
+ham.addEventListener('click',function(){ham.classList.toggle('open');mob.classList.toggle('open');});
+function closeMobile(){ham.classList.remove('open');mob.classList.remove('open');}
 
 /* ── Scroll reveal ── */
-var revealObserver = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(function(el, i) {
-  el.style.transitionDelay = (i % 6) * 0.07 + 's';
-  revealObserver.observe(el);
-});
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=(i%6)*0.07+'s';ro.observe(el);});
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════
+   ACCORDION
+══════════════════════════════ */
+function toggleAcc(id){
+  var item=document.getElementById('acc-'+id);
+  var trigger=item.querySelector('.acc-trigger');
+  var isOpen=item.classList.contains('open');
+  if(isOpen){
+    item.classList.remove('open');
+    trigger.setAttribute('aria-expanded','false');
+  } else {
+    item.classList.add('open');
+    trigger.setAttribute('aria-expanded','true');
+  }
+}
+
+/* Used by footer links: ensure the panel is open, then let the href scroll there */
+function openAcc(id){
+  var item=document.getElementById('acc-'+id);
+  var trigger=item.querySelector('.acc-trigger');
+  item.classList.add('open');
+  trigger.setAttribute('aria-expanded','true');
+}
+
+/* ══════════════════════════════
    BOOKING MODAL
-══════════════════════════════════════════ */
-var modal          = document.getElementById('bookingModal');
-var modalCloseBtn  = document.getElementById('modalClose');
-var modalBadge     = document.getElementById('modalServiceBadge');
-var modalSubmitBtn = document.getElementById('modalSubmit');
-var currentService = '';
+══════════════════════════════ */
+var modal         =document.getElementById('bookingModal');
+var modalCloseBtn =document.getElementById('modalClose');
+var modalBadge    =document.getElementById('modalServiceBadge');
+var modalSubmit   =document.getElementById('modalSubmit');
+var currentService='';
 
-function openModal(serviceName) {
-  currentService = serviceName;
-  modalBadge.textContent = serviceName;
-
-  /* Reset fields */
-  ['fieldName','fieldPhone','fieldArea','fieldDate','fieldTime','fieldNotes'].forEach(function(id) {
-    document.getElementById(id).value = '';
-  });
-  /* Re-enforce min date every time modal opens */
-  var today = new Date();
-  var yyyy  = today.getFullYear();
-  var mm    = String(today.getMonth() + 1).padStart(2, '0');
-  var dd    = String(today.getDate()).padStart(2, '0');
-  document.getElementById('fieldDate').min = yyyy + '-' + mm + '-' + dd;
-
-  /* Clear error styles */
-  ['fieldName','fieldArea'].forEach(function(id) {
-    document.getElementById(id).classList.remove('field-error');
-  });
-
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(function() { document.getElementById('fieldName').focus(); }, 120);
-}
-
-function closeModal() {
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-modalCloseBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
-/* ── Send booking ── */
-modalSubmitBtn.addEventListener('click', function() {
-  var name  = document.getElementById('fieldName').value.trim();
-  var phone = document.getElementById('fieldPhone').value.trim();
-  var area  = document.getElementById('fieldArea').value.trim();
-  var date  = document.getElementById('fieldDate').value;
-  var time  = document.getElementById('fieldTime').value;
-  var notes = document.getElementById('fieldNotes').value.trim();
-
-  /* Validate */
-  var valid = true;
+function openModal(serviceName){
+  currentService=serviceName;
+  modalBadge.textContent=serviceName;
+  ['fieldName','fieldPhone','fieldArea','fieldDate','fieldTime','fieldNotes'].forEach(function(id){document.getElementById(id).value='';});
+  /* refresh min date */
+  var t=new Date();
+  document.getElementById('fieldDate').min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
   document.getElementById('fieldName').classList.remove('field-error');
   document.getElementById('fieldArea').classList.remove('field-error');
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){document.getElementById('fieldName').focus();},120);
+}
 
-  if (!name) {
-    document.getElementById('fieldName').classList.add('field-error');
-    document.getElementById('fieldName').focus();
-    valid = false;
-  }
-  if (!area) {
-    document.getElementById('fieldArea').classList.add('field-error');
-    if (valid) document.getElementById('fieldArea').focus();
-    valid = false;
-  }
-  if (!valid) return;
+function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
 
-  /* Format date nicely */
-  var dateStr = '';
-  if (date) {
-    var d = new Date(date + 'T12:00:00');
-    dateStr = d.toLocaleDateString('en-KE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  }
+modalCloseBtn.addEventListener('click',closeModal);
+modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 
-  /* Format time nicely */
-  var timeStr = '';
-  if (time) {
-    var parts = time.split(':');
-    var hr = parseInt(parts[0], 10);
-    var mn = parts[1];
-    var ampm = hr >= 12 ? 'PM' : 'AM';
-    var hr12 = hr % 12 || 12;
-    timeStr = hr12 + ':' + mn + ' ' + ampm;
-  }
+modalSubmit.addEventListener('click',function(){
+  var name =document.getElementById('fieldName').value.trim();
+  var phone=document.getElementById('fieldPhone').value.trim();
+  var area =document.getElementById('fieldArea').value.trim();
+  var date =document.getElementById('fieldDate').value;
+  var time =document.getElementById('fieldTime').value;
+  var notes=document.getElementById('fieldNotes').value.trim();
 
-  /* ── Build clean, well-formatted WhatsApp message ── */
-  var lines = [];
-  lines.push('Hello Nyumbani Cleaning Services! 👋');
+  /* validate */
+  var valid=true;
+  document.getElementById('fieldName').classList.remove('field-error');
+  document.getElementById('fieldArea').classList.remove('field-error');
+  if(!name){document.getElementById('fieldName').classList.add('field-error');document.getElementById('fieldName').focus();valid=false;}
+  if(!area){document.getElementById('fieldArea').classList.add('field-error');if(valid)document.getElementById('fieldArea').focus();valid=false;}
+  if(!valid)return;
+
+  /* format date */
+  var dateStr='';
+  if(date){var d=new Date(date+'T12:00:00');dateStr=d.toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+
+  /* format time */
+  var timeStr='';
+  if(time){var p=time.split(':');var hr=parseInt(p[0],10);var mn=p[1];var ampm=hr>=12?'PM':'AM';var h12=hr%12||12;timeStr=h12+':'+mn+' '+ampm;}
+
+  /* build message */
+  var lines=[];
+  lines.push('Hello Nyumbani Cleaning Services! \uD83D\uDC4B');
   lines.push('');
   lines.push('I would like to book the following service:');
   lines.push('');
-  lines.push('🧹 *Service:* ' + currentService);
-  lines.push('👤 *Name:* ' + name);
-  if (phone) lines.push('📞 *My Number:* ' + phone);
-  lines.push('📍 *Location / Area:* ' + area);
-  if (dateStr) lines.push('📅 *Preferred Date:* ' + dateStr);
-  if (timeStr) lines.push('⏰ *Preferred Time:* ' + timeStr);
-  if (notes)   lines.push('📝 *Additional Notes:* ' + notes);
+  lines.push('\uD83E\uDDF9 *Service:* '+currentService);
+  lines.push('\uD83D\uDC64 *Name:* '+name);
+  if(phone)lines.push('\uD83D\uDCDE *My Number:* '+phone);
+  lines.push('\uD83D\uDCCD *Location / Area:* '+area);
+  if(dateStr)lines.push('\uD83D\uDCC5 *Preferred Date:* '+dateStr);
+  if(timeStr)lines.push('\u23F0 *Preferred Time:* '+timeStr);
+  if(notes)lines.push('\uD83D\uDCDD *Additional Notes:* '+notes);
   lines.push('');
-  lines.push('Kindly confirm availability. Thank you! 🙏');
+  lines.push('Kindly confirm availability. Thank you! \uD83D\uDE4F');
 
-  var msg = lines.join('\n');
-  window.open('https://wa.me/254118624445?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/254118624445?text='+encodeURIComponent(lines.join('\n')),'_blank');
   closeModal();
 });
 
-/* Remove error highlight on input */
-document.getElementById('fieldName').addEventListener('input', function() { this.classList.remove('field-error'); });
-document.getElementById('fieldArea').addEventListener('input', function() { this.classList.remove('field-error'); });
+document.getElementById('fieldName').addEventListener('input',function(){this.classList.remove('field-error');});
+document.getElementById('fieldArea').addEventListener('input',function(){this.classList.remove('field-error');});
 </script>
 </body>
 </html>
