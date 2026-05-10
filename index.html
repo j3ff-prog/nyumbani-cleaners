@@ -19,6 +19,7 @@ ul{list-style:none}
   --light:#64b5f6;--pale:#e8f4fd;--white:#ffffff;--off:#f4f8ff;
   --border:#dce8f7;--text:#0d1b3e;--muted:#5a6e8c;
   --wa:#25d366;--wa-dark:#128c7e;
+  --gold:#f59e0b;
   --r:18px;--r-sm:12px;
   --sh:0 4px 24px rgba(11,36,89,.10);
   --sh-lg:0 12px 48px rgba(11,36,89,.15);
@@ -74,10 +75,22 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var
 .mobile-menu a:hover{background:var(--pale);color:var(--blue)}
 .mobile-menu .m-book{margin-top:8px;background:var(--wa);color:#fff!important;text-align:center;border-radius:50px!important;box-shadow:0 4px 16px rgba(37,211,102,.3);font-weight:700!important;padding:13px 14px!important}
 
-/* HERO */
-#home{padding-top:68px;background:linear-gradient(160deg,var(--navy) 0%,#163a9e 55%,var(--mid) 100%);position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center}
-#home::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
-#home::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(33,150,243,.25) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+/* HERO + SLIDESHOW */
+#home{padding-top:68px;position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center}
+.hero-slides{position:absolute;inset:0;z-index:0}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center}
+.hero-slide.active{opacity:1}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(11,36,89,.82) 0%,rgba(22,58,158,.72) 55%,rgba(25,118,210,.55) 100%)}
+.slide-1{background-image:url('hero-photo-1.jpg');background-color:#0b2459}
+.slide-2{background-image:url('hero-photo-2.jpg');background-color:#163a9e}
+.slide-3{background-image:url('hero-photo-3.jpg');background-color:#1976d2}
+.slide-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+.slide-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);border:none;cursor:pointer;transition:all .25s;padding:0}
+.slide-dot.active{background:#fff;width:22px;border-radius:4px}
+.slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:background .2s;backdrop-filter:blur(4px)}
+.slide-arrow:hover{background:rgba(255,255,255,.28)}
+.slide-arrow.prev{left:20px}
+.slide-arrow.next{right:20px}
 .hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:60px 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center;position:relative;z-index:1}
 .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);padding:6px 16px;border-radius:50px;font-size:.76rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin-bottom:24px}
 .hero-h1{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:20px}
@@ -100,7 +113,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var
 .hero-card-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .hchip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.72rem;font-weight:600;padding:5px 12px;border-radius:20px}
 
-/* SECTIONS */
+/* SHARED */
 .section{padding:80px 24px}
 .container{max-width:1200px;margin:0 auto}
 .section-alt{background:var(--off)}
@@ -120,6 +133,15 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var
 .svc-card p{font-size:.84rem;color:var(--muted);line-height:1.65}
 .svc-from{margin-top:14px;font-size:.78rem;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:4px}
 
+/* GALLERY */
+#gallery{padding:0;overflow:hidden;background:var(--navy)}
+.gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);height:260px}
+.gallery-photo{position:relative;overflow:hidden;cursor:pointer;background:#0b2459}
+.gallery-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gallery-photo:hover img{transform:scale(1.07)}
+.gallery-photo .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.35);font-size:.75rem;gap:6px;pointer-events:none}
+.gallery-photo .ph span{font-size:2rem}
+
 /* ACCORDION */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .accordion{display:flex;flex-direction:column;gap:12px}
@@ -137,8 +159,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var
 .acc-item.open .acc-chevron{transform:rotate(180deg);background:var(--navy);color:#fff}
 .acc-body{display:none;padding:0 22px 22px;animation:fadeUp .3s ease}
 .acc-item.open .acc-body{display:block}
-
-/* TABLES */
 .price-table-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh);-webkit-overflow-scrolling:touch}
 table.pt{width:100%;border-collapse:collapse;min-width:480px}
 table.pt thead tr{background:linear-gradient(90deg,var(--navy),var(--blue))}
@@ -192,6 +212,61 @@ table.pt td{padding:13px 18px;font-size:.88rem;border-bottom:1px solid var(--bor
 .why-pt h4{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px}
 .why-pt p{font-size:.81rem;color:var(--muted);line-height:1.55}
 
+/* OUR WORK */
+#work{background:var(--off)}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.work-card{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);position:relative;background:var(--border)}
+.work-card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .4s}
+.work-card:hover img{transform:scale(1.05)}
+.work-label{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(11,36,89,.85),transparent);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.3px}
+.work-ph{width:100%;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:6px;font-size:.78rem;background:var(--border)}
+.work-ph span{font-size:2rem}
+
+/* ══════════════════════════════════════
+   REVIEWS
+══════════════════════════════════════ */
+#reviews{background:var(--white)}
+.reviews-header{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:40px;padding:28px 32px;background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:var(--r);color:#fff}
+.reviews-avg{text-align:center;flex-shrink:0}
+.reviews-avg .big{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;line-height:1}
+.reviews-avg .stars-display{color:var(--gold);font-size:1.3rem;letter-spacing:2px;margin:4px 0}
+.reviews-avg .count{font-size:.78rem;opacity:.75}
+.reviews-bar{flex:1;min-width:180px}
+.reviews-bar h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.reviews-bar p{font-size:.84rem;opacity:.8;line-height:1.5}
+
+/* review form */
+.review-form-wrap{background:var(--off);border:1.5px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:32px}
+.review-form-wrap h4{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:18px}
+.star-picker{display:flex;gap:6px;margin-bottom:16px}
+.star-picker button{background:none;border:none;font-size:1.8rem;cursor:pointer;color:#d1d5db;transition:color .15s,transform .1s;line-height:1;padding:0}
+.star-picker button:hover,.star-picker button.lit{color:var(--gold)}
+.star-picker button:active{transform:scale(.85)}
+.review-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.rf-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:var(--text);background:var(--white);outline:none;transition:border-color .18s}
+.rf-input:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(33,150,243,.1)}
+.rf-textarea{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:var(--text);background:var(--white);outline:none;resize:vertical;min-height:80px;margin-bottom:12px;transition:border-color .18s}
+.rf-textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(33,150,243,.1)}
+.rf-submit{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:11px 22px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;transition:background .18s,transform .15s}
+.rf-submit:hover{background:var(--blue);transform:translateY(-1px)}
+
+/* review cards */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.review-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:22px 22px 18px;position:relative;transition:box-shadow .22s}
+.review-card:hover{box-shadow:var(--sh-lg)}
+.review-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.reviewer-info .rname{font-weight:800;font-size:.92rem;color:var(--navy)}
+.reviewer-info .rdate{font-size:.72rem;color:var(--muted);margin-top:2px}
+.review-stars{color:var(--gold);font-size:1rem;letter-spacing:1px}
+.review-text{font-size:.85rem;color:var(--muted);line-height:1.65;margin-top:8px}
+/* delete button — always visible to owner (you). Visitors can't remove reviews because
+   the delete button calls deleteReview(id) which requires the id to exist in storage */
+.review-delete{position:absolute;top:10px;right:10px;background:#fee2e2;border:none;color:#dc2626;border-radius:6px;padding:4px 9px;font-size:.7rem;font-weight:700;cursor:pointer;transition:background .15s}
+.review-delete:hover{background:#fecaca}
+.reviews-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:.9rem}
+/* loading state */
+.reviews-loading{text-align:center;padding:32px;color:var(--muted);font-size:.88rem}
+
 /* CONTACT */
 .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
 .contact-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:36px 32px;box-shadow:var(--sh)}
@@ -229,20 +304,16 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 .f-col a{font-size:.84rem;color:rgba(255,255,255,.7);transition:color .18s}
 .f-col a:hover{color:var(--light)}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.78rem;opacity:.5}
-
-/* FLOATING WA */
 .float-wa{position:fixed;bottom:24px;right:24px;z-index:800;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 6px 22px rgba(37,211,102,.5);animation:wa-pulse 2.8s infinite;transition:transform .2s}
 .float-wa:hover{transform:scale(1.1)}
 @keyframes wa-pulse{0%,100%{box-shadow:0 6px 22px rgba(37,211,102,.45)}50%{box-shadow:0 6px 36px rgba(37,211,102,.75)}}
-
-/* REVEAL */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
 .reveal.visible{opacity:1;transform:none}
 
 /* RESPONSIVE */
-@media(max-width:960px){.hero-wrap{grid-template-columns:1fr}.hero-card{display:none}.why-grid{grid-template-columns:1fr}.book-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}}
-@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.hero-wrap{padding:40px 0 60px}.hero-h1{font-size:clamp(2rem,7vw,2.8rem)}.hero-sub{font-size:.93rem}.hero-btns{gap:10px}.btn-wa-lg,.btn-ghost{padding:12px 20px;font-size:.86rem}.section{padding:60px 20px}#areas{padding:60px 20px}.services-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr 1fr}.extras-grid{grid-template-columns:1fr}}
-@media(max-width:540px){.hero-wrap{padding:36px 0 52px}.hero-h1{font-size:2rem}.hero-sub{font-size:.88rem}.hero-stats{gap:20px}.hs-num{font-size:1.6rem}.hero-btns{flex-direction:column}.btn-wa-lg,.btn-ghost{width:100%;justify-content:center}.steps-grid{grid-template-columns:1fr}.acc-trigger{padding:14px 16px}.acc-body{padding:0 16px 18px}table.pt thead th,table.pt td{padding:10px 12px;font-size:.8rem}.contact-box,.quick-ref{padding:24px 18px}.modal-box{border-radius:18px}.modal-head{padding:18px 18px 14px}.modal-body{padding:18px 18px 22px}.form-row{grid-template-columns:1fr}.why-visual{padding:32px 24px}.why-visual h2{font-size:1.4rem}.footer-top{grid-template-columns:1fr;gap:28px}}
+@media(max-width:960px){.hero-wrap{grid-template-columns:1fr}.hero-card{display:none}.why-grid{grid-template-columns:1fr}.book-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}.gallery-strip{grid-template-columns:repeat(2,1fr);height:auto}.gallery-photo{height:180px}.work-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.hero-wrap{padding:40px 0 60px}.hero-h1{font-size:clamp(2rem,7vw,2.8rem)}.hero-sub{font-size:.93rem}.hero-btns{gap:10px}.btn-wa-lg,.btn-ghost{padding:12px 20px;font-size:.86rem}.section{padding:60px 20px}#areas{padding:60px 20px}.services-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr 1fr}.extras-grid{grid-template-columns:1fr}.review-form-row{grid-template-columns:1fr}.reviews-header{gap:20px;padding:22px 20px}.reviews-avg .big{font-size:2.8rem}.slide-arrow{display:none}}
+@media(max-width:540px){.hero-wrap{padding:36px 0 52px}.hero-h1{font-size:2rem}.hero-sub{font-size:.88rem}.hero-stats{gap:20px}.hs-num{font-size:1.6rem}.hero-btns{flex-direction:column}.btn-wa-lg,.btn-ghost{width:100%;justify-content:center}.steps-grid{grid-template-columns:1fr}.acc-trigger{padding:14px 16px}.acc-body{padding:0 16px 18px}table.pt thead th,table.pt td{padding:10px 12px;font-size:.8rem}.contact-box,.quick-ref{padding:24px 18px}.modal-box{border-radius:18px}.modal-head{padding:18px 18px 14px}.modal-body{padding:18px 18px 22px}.form-row{grid-template-columns:1fr}.why-visual{padding:32px 24px}.why-visual h2{font-size:1.4rem}.footer-top{grid-template-columns:1fr;gap:28px}.gallery-strip{grid-template-columns:repeat(2,1fr)}.gallery-photo{height:130px}.work-grid{grid-template-columns:1fr}.reviews-header{flex-direction:column;gap:16px;text-align:center}.review-form-wrap{padding:20px 16px}}
 @media(max-width:360px){.nav-brand-name{font-size:.82rem}.nav-brand-tag{display:none}.nav-logo-img{width:36px;height:36px}}
 </style>
 </head>
@@ -254,44 +325,23 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
     <div class="modal-head">
       <div class="modal-head-text">
         <h3 id="modalTitle">Complete Your Booking</h3>
-        <p>Fill in your details &#x2014; WhatsApp will open with your booking ready to send.</p>
+        <p>Fill in your details — WhatsApp will open with your booking ready to send.</p>
         <div class="modal-service-badge" id="modalServiceBadge">Service</div>
       </div>
       <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group">
-          <label for="fieldName">Your Name *</label>
-          <input type="text" id="fieldName" placeholder="e.g. Jane Mwangi" />
-        </div>
-        <div class="form-group">
-          <label for="fieldPhone">Phone Number</label>
-          <input type="tel" id="fieldPhone" placeholder="e.g. 0712 345 678" />
-        </div>
+        <div class="form-group"><label for="fieldName">Your Name *</label><input type="text" id="fieldName" placeholder="e.g. Jane Mwangi" /></div>
+        <div class="form-group"><label for="fieldPhone">Phone Number</label><input type="tel" id="fieldPhone" placeholder="e.g. 0712 345 678" /></div>
       </div>
-      <div class="form-group">
-        <label for="fieldArea">Your Area / Location *</label>
-        <input type="text" id="fieldArea" placeholder="e.g. Umoja, Kilimani, Karen..." />
-      </div>
+      <div class="form-group"><label for="fieldArea">Your Area / Location *</label><input type="text" id="fieldArea" placeholder="e.g. Umoja, Kilimani, Karen..." /></div>
       <div class="form-row">
-        <div class="form-group">
-          <label for="fieldDate">Preferred Date</label>
-          <input type="date" id="fieldDate" />
-        </div>
-        <div class="form-group">
-          <label for="fieldTime">Preferred Time</label>
-          <input type="time" id="fieldTime" />
-        </div>
+        <div class="form-group"><label for="fieldDate">Preferred Date</label><input type="date" id="fieldDate" /></div>
+        <div class="form-group"><label for="fieldTime">Preferred Time</label><input type="time" id="fieldTime" /></div>
       </div>
-      <div class="form-group">
-        <label for="fieldNotes">Extra Notes (optional)</label>
-        <textarea id="fieldNotes" placeholder="Special requests, access details, house size, floor number, etc."></textarea>
-      </div>
-      <button class="modal-submit" id="modalSubmit">
-        <span style="font-size:1.2rem">&#x1F4AC;</span>
-        Open WhatsApp &amp; Send Booking
-      </button>
+      <div class="form-group"><label for="fieldNotes">Extra Notes (optional)</label><textarea id="fieldNotes" placeholder="Special requests, access details, house size, floor number, etc."></textarea></div>
+      <button class="modal-submit" id="modalSubmit"><span style="font-size:1.2rem">&#x1F4AC;</span>Open WhatsApp &amp; Send Booking</button>
       <p class="modal-note">WhatsApp will open with your booking details pre-filled. Just tap <strong>Send</strong>.</p>
     </div>
   </div>
@@ -302,20 +352,17 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 <nav id="nav">
   <div class="nav-inner">
     <a href="#home" class="nav-brand">
-      <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services logo" class="nav-logo-img"
-        onerror="this.style.display='none';document.querySelector('.nav-logo-placeholder').style.display='flex';" />
+      <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services logo" class="nav-logo-img" onerror="this.style.display='none';document.querySelector('.nav-logo-placeholder').style.display='flex';" />
       <div class="nav-logo-placeholder" style="display:none;">&#x1F3E0;</div>
-      <div class="nav-brand-text">
-        <div class="nav-brand-name">Nyumbani Cleaning</div>
-        <div class="nav-brand-tag">A Clean Home, A Better Life</div>
-      </div>
+      <div class="nav-brand-text"><div class="nav-brand-name">Nyumbani Cleaning</div><div class="nav-brand-tag">A Clean Home, A Better Life</div></div>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#services">Services</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#how">How It Works</a></li>
       <li><a href="#areas">Areas</a></li>
-      <li><a href="#why">Why Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#book">Contact</a></li>
       <li><a href="https://wa.me/254118624445?text=Hi!%20I%20want%20to%20book%20a%20cleaning%20service." target="_blank" class="nav-book">&#x1F4AC; Book Now</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -325,7 +372,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
     <a href="#pricing"  onclick="closeMobile()">Pricing</a>
     <a href="#how"      onclick="closeMobile()">How It Works</a>
     <a href="#areas"    onclick="closeMobile()">Areas</a>
-    <a href="#why"      onclick="closeMobile()">Why Us</a>
+    <a href="#reviews"  onclick="closeMobile()">Reviews</a>
     <a href="#book"     onclick="closeMobile()">Contact</a>
     <a href="https://wa.me/254118624445?text=Hi!%20I%20want%20to%20book%20a%20cleaning%20service." target="_blank" class="m-book">&#x1F4AC; Book on WhatsApp</a>
   </div>
@@ -334,11 +381,23 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 
 <!-- HERO -->
 <section id="home">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide slide-1 active"></div>
+    <div class="hero-slide slide-2"></div>
+    <div class="hero-slide slide-3"></div>
+  </div>
+  <button class="slide-arrow prev" onclick="moveSlide(-1)" aria-label="Previous">&#x2039;</button>
+  <button class="slide-arrow next" onclick="moveSlide(1)"  aria-label="Next">&#x203A;</button>
+  <div class="slide-dots" id="slideDots">
+    <button class="slide-dot active" onclick="goSlide(0)"></button>
+    <button class="slide-dot"        onclick="goSlide(1)"></button>
+    <button class="slide-dot"        onclick="goSlide(2)"></button>
+  </div>
   <div class="hero-wrap container">
     <div class="hero-left">
       <div class="hero-pill">&#x1F3E0; Nairobi's Trusted Cleaning Team</div>
       <h1 class="hero-h1">A <em>Clean Home,</em><br>A Better Life.</h1>
-      <p class="hero-sub">Professional cleaning services across Nairobi and surrounding areas. Subscriptions, deep cleans, fumigation, laundry &amp; more &#x2014; all booked via WhatsApp.</p>
+      <p class="hero-sub">Professional cleaning services across Nairobi and surrounding areas. Subscriptions, deep cleans, fumigation, laundry &amp; more — all booked via WhatsApp.</p>
       <div class="hero-btns">
         <a href="https://wa.me/254118624445?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%20would%20like%20to%20book%20a%20service." target="_blank" class="btn-wa-lg">&#x1F4AC; Book on WhatsApp</a>
         <a href="#pricing" class="btn-ghost">See Pricing &#x2193;</a>
@@ -350,8 +409,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       </div>
     </div>
     <div class="hero-card">
-      <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services" class="hero-card-logo"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <img src="nyumbanilogo.png" alt="Nyumbani Cleaning Services" class="hero-card-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
       <div class="hero-card-logo-placeholder" style="display:none;">&#x1F3E0;</div>
       <h3>Nyumbani Cleaning Services</h3>
       <p>Professional. Reliable. Affordable.<br>Serving all of Nairobi.</p>
@@ -370,198 +428,143 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
   <div class="container">
     <div class="eyebrow reveal">&#x2736; What We Offer</div>
     <h2 class="section-title reveal">Our <span>Services</span></h2>
-    <p class="section-body reveal">From quick general cleans to full deep cleans, fumigation, laundry, and subscriptions &#x2014; we handle every need professionally.</p>
+    <p class="section-body reveal">From quick general cleans to full deep cleans, fumigation, laundry, and subscriptions — we handle every need professionally.</p>
     <div class="services-grid">
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F4C5;</div><h3>Subscription Packages</h3><p>Regular weekly cleaning &#x2014; Basic, Half Day, Full Day, or Daily. Consistent care for your home every week.</p><div class="svc-from">&#x2736; From KES 4,000 / month</div></div>
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F9F9;</div><h3>Deep Cleaning</h3><p>Thorough top-to-bottom cleaning for empty or occupied homes of any size &#x2014; from bedsitters to 5-bedrooms.</p><div class="svc-from">&#x2736; From KES 3,000</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F4C5;</div><h3>Subscription Packages</h3><p>Regular weekly cleaning — Basic, Half Day, Full Day, or Daily. Consistent care for your home every week.</p><div class="svc-from">&#x2736; From KES 4,000 / month</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F9F9;</div><h3>Deep Cleaning</h3><p>Thorough top-to-bottom cleaning for empty or occupied homes of any size — from bedsitters to 5-bedrooms.</p><div class="svc-from">&#x2736; From KES 3,000</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F3E0;</div><h3>General Cleaning</h3><p>Everyday home cleaning priced by room or flat-rate by apartment type. Quick, clean, affordable.</p><div class="svc-from">&#x2736; From KES 250 / room</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F6CB;&#xFE0F;</div><h3>Sofa, Mattress &amp; Carpet</h3><p>Professional fabric and upholstery cleaning for mattresses, sofas, bed frames, and carpets.</p><div class="svc-from">&#x2736; From KES 500 / seater</div></div>
-      <div class="svc-card reveal"><div class="svc-icon">&#x1F455;</div><h3>Laundry &amp; Extra Services</h3><p>Laundry baskets, ironing, folding, shoe wiping, and cooking sessions &#x2014; monthly or per visit.</p><div class="svc-from">&#x2736; From KES 299</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">&#x1F455;</div><h3>Laundry &amp; Extra Services</h3><p>Laundry baskets, ironing, folding, shoe wiping, and cooking sessions — monthly or per visit.</p><div class="svc-from">&#x2736; From KES 299</div></div>
       <div class="svc-card reveal"><div class="svc-icon">&#x1F41B;</div><h3>Fumigation</h3><p>Safe and effective pest and insect fumigation treatments for all house sizes across Nairobi.</p><div class="svc-from">&#x2736; From KES 2,500</div></div>
     </div>
   </div>
 </section>
 
-<!-- PRICING — ACCORDION -->
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-strip">
+    <div class="gallery-photo"><img src="gallery-photo-1.jpg" alt="Nyumbani cleaning team at work" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Photo 1</div></div>
+    <div class="gallery-photo"><img src="gallery-photo-2.jpg" alt="Sparkling clean living room" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Photo 2</div></div>
+    <div class="gallery-photo"><img src="gallery-photo-3.jpg" alt="Kitchen deep clean result" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Photo 3</div></div>
+    <div class="gallery-photo"><img src="gallery-photo-4.jpg" alt="Sofa and mattress cleaning" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Photo 4</div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
 <section class="section" id="pricing">
   <div class="container">
     <div class="eyebrow reveal">&#x2736; Transparent Pricing</div>
     <h2 class="section-title reveal">Clear, <span>Honest Rates</span></h2>
     <p class="section-body reveal">No hidden fees. Click any category to expand it, then book directly on WhatsApp in one tap.</p>
-
     <div class="accordion" id="accordion">
 
-      <!-- 1 Subscriptions -->
       <div class="acc-item open" id="acc-subscriptions">
         <button class="acc-trigger" onclick="toggleAcc('subscriptions')" aria-expanded="true">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F4C5;</div>
-            <div><div class="acc-title">Subscription Packages</div><div class="acc-sub">Weekly cleaning plans &#x2014; from KES 4,000/month</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F4C5;</div><div><div class="acc-title">Subscription Packages</div><div class="acc-sub">Weekly cleaning plans — from KES 4,000/month</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
-          <div class="price-table-wrap">
-            <table class="pt">
-              <thead><tr><th>Package</th><th>Frequency</th><th>Coverage</th><th>Price / Month</th><th>Book</th></tr></thead>
-              <tbody>
-                <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Basic Subscription — KES 4,000/month (Bedsitter & 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('📅 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('📅 Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="price-table-wrap"><table class="pt"><thead><tr><th>Package</th><th>Frequency</th><th>Coverage</th><th>Price / Month</th><th>Book</th></tr></thead><tbody>
+            <tr><td>Basic</td><td>Once a week</td><td>Bedsitter &amp; 1 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Basic Subscription — KES 4,000/month (Bedsitter & 1 Bedroom, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td>Once a week</td><td>2 Bedrooms</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 2 Bedroom Subscription — KES 5,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td>Once a week</td><td>3 Bedrooms</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('📅 3 Bedroom Subscription — KES 6,000/month (once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Half Day</td><td>Once a week</td><td>Up to 4 hours</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('📅 Half Day Subscription — KES 4,000/month (up to 4 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Full Day</td><td>Once a week</td><td>Up to 6 hours</td><td class="pv">KES 5,000</td><td><button class="bk" onclick="openModal('📅 Full Day Subscription — KES 5,000/month (up to 6 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Daily Service</td><td>Once a week</td><td>Up to 8 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily Service Subscription — KES 9,300/month (up to 8 hours, once a week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Daily On-Demand</td><td>6 times / week</td><td>Up to 4 hours</td><td class="pv">KES 9,300</td><td><button class="bk" onclick="openModal('📅 Daily On-Demand Subscription — KES 9,300/month (up to 4 hours, 6x per week)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Hourly Rate</td><td>On demand</td><td>Timed session</td><td class="pv">KES 300 / hr</td><td><button class="bk" onclick="openModal('📅 Hourly Cleaning — KES 300/hour (on demand)')">&#x1F4AC; Book</button></td></tr>
+          </tbody></table></div>
           <div class="pnote">&#x26A0;&#xFE0F; Rates are per cleaner and do <strong>not</strong> include cleaning equipment or detergents.</div>
         </div>
       </div>
 
-      <!-- 2 Deep Cleaning -->
       <div class="acc-item" id="acc-deep">
         <button class="acc-trigger" onclick="toggleAcc('deep')" aria-expanded="false">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F9F9;</div>
-            <div><div class="acc-title">Deep Cleaning</div><div class="acc-sub">Empty or occupied homes &#x2014; from KES 3,000</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F9F9;</div><div><div class="acc-title">Deep Cleaning</div><div class="acc-sub">Empty or occupied homes — from KES 3,000</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
-          <div class="price-table-wrap">
-            <table class="pt">
-              <thead><tr><th>House Type</th><th>Empty House</th><th>Occupied House</th><th>Book</th></tr></thead>
-              <tbody>
-                <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="pnote">&#x2705; Post-construction cleaning available &#x2014; <a href="https://wa.me/254118624445?text=Hi!%20I%27d%20like%20a%20post-construction%20cleaning%20quote." target="_blank" style="color:var(--sky)">contact us for a quote</a>.</div>
+          <div class="price-table-wrap"><table class="pt"><thead><tr><th>House Type</th><th>Empty House</th><th>Occupied House</th><th>Book</th></tr></thead><tbody>
+            <tr><td>Bedsitter / Studio</td><td class="pv">KES 3,000</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — Bedsitter/Studio (Empty: KES 3,000 | Occupied: KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 4,000</td><td class="pv">KES 6,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 1 Bedroom (Empty: KES 4,000 | Occupied: KES 6,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 6,500</td><td class="pv">KES 7,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 2 Bedroom (Empty: KES 6,500 | Occupied: KES 7,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 10,000</td><td class="pv">KES 13,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 3 Bedroom (Empty: KES 10,000 | Occupied: KES 13,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 16,000</td><td class="pv">KES 17,500</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 4 Bedroom (Empty: KES 16,000 | Occupied: KES 17,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>5 Bedroom</td><td class="pv">KES 18,000</td><td class="pv">KES 22,000</td><td><button class="bk" onclick="openModal('🧹 Deep Cleaning — 5 Bedroom (Empty: KES 18,000 | Occupied: KES 22,000)')">&#x1F4AC; Book</button></td></tr>
+          </tbody></table></div>
+          <div class="pnote">&#x2705; Post-construction cleaning available — <a href="https://wa.me/254118624445?text=Hi!%20I%27d%20like%20a%20post-construction%20cleaning%20quote." target="_blank" style="color:var(--sky)">contact us for a quote</a>.</div>
         </div>
       </div>
 
-      <!-- 3 General Cleaning -->
       <div class="acc-item" id="acc-general">
         <button class="acc-trigger" onclick="toggleAcc('general')" aria-expanded="false">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F3E0;</div>
-            <div><div class="acc-title">General Cleaning</div><div class="acc-sub">By room or flat-rate &#x2014; from KES 250/room</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F3E0;</div><div><div class="acc-title">General Cleaning</div><div class="acc-sub">By room or flat-rate — from KES 250/room</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
-          <div class="price-table-wrap">
-            <table class="pt">
-              <thead><tr><th>House Type</th><th>Price</th><th>Book</th></tr></thead>
-              <tbody>
-                <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="price-table-wrap"><table class="pt"><thead><tr><th>House Type</th><th>Price</th><th>Book</th></tr></thead><tbody>
+            <tr><td>Per Room</td><td class="pv">KES 250 / room</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Per Room (KES 250/room)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Studio Apartment</td><td class="pv">KES 999</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — Studio Apartment (KES 999)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 1,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 1 Bedroom (KES 1,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 2 Bedroom (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 3 Bedroom (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 4,000</td><td><button class="bk" onclick="openModal('🏠 General Cleaning — 4 Bedroom (KES 4,000)')">&#x1F4AC; Book</button></td></tr>
+          </tbody></table></div>
         </div>
       </div>
 
-      <!-- 4 Sofa & Mattress -->
       <div class="acc-item" id="acc-sofa">
         <button class="acc-trigger" onclick="toggleAcc('sofa')" aria-expanded="false">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F6CB;&#xFE0F;</div>
-            <div><div class="acc-title">Sofa, Mattress &amp; Carpet</div><div class="acc-sub">Upholstery &amp; fabric cleaning &#x2014; from KES 500/seater</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F6CB;&#xFE0F;</div><div><div class="acc-title">Sofa, Mattress &amp; Carpet</div><div class="acc-sub">Upholstery &amp; fabric cleaning — from KES 500/seater</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
-          <div class="price-table-wrap">
-            <table class="pt">
-              <thead><tr><th>Item</th><th>Size</th><th>Price</th><th>Book</th></tr></thead>
-              <tbody>
-                <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 4×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 5×6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 6×6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 4×6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 5×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 6×6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('🛋️ Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m&#xB2;</td><td><button class="bk" onclick="openModal('🛋️ Carpet Cleaning — KES 40/m²')">&#x1F4AC; Book</button></td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="price-table-wrap"><table class="pt"><thead><tr><th>Item</th><th>Size</th><th>Price</th><th>Book</th></tr></thead><tbody>
+            <tr><td>Mattress</td><td>4 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 4×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Mattress</td><td>5 x 6</td><td class="pv">KES 3,000</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 5×6 (KES 3,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Mattress</td><td>6 x 6</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🛋️ Mattress Cleaning — 6×6 (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>4 x 6</td><td class="pv">KES 2,000</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 4×6 (KES 2,000)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>5 x 6</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 5×6 (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Bed Frame</td><td>6 x 6</td><td class="pv">KES 2,800</td><td><button class="bk" onclick="openModal('🛋️ Bed Frame Cleaning — 6×6 (KES 2,800)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Sofa / Seat</td><td>Per Seater</td><td class="pv">KES 500</td><td><button class="bk" onclick="openModal('🛋️ Sofa Cleaning — Per Seater (KES 500/seater)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>Carpet</td><td>Per Sq. Metre</td><td class="pv">KES 40 / m&#xB2;</td><td><button class="bk" onclick="openModal('🛋️ Carpet Cleaning — KES 40/m²')">&#x1F4AC; Book</button></td></tr>
+          </tbody></table></div>
         </div>
       </div>
 
-      <!-- 5 Extras & Laundry -->
       <div class="acc-item" id="acc-extras">
         <button class="acc-trigger" onclick="toggleAcc('extras')" aria-expanded="false">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F455;</div>
-            <div><div class="acc-title">Laundry &amp; Extra Services</div><div class="acc-sub">Ironing, cooking, folding &amp; more &#x2014; from KES 299</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F455;</div><div><div class="acc-title">Laundry &amp; Extra Services</div><div class="acc-sub">Ironing, cooking, folding &amp; more — from KES 299</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
           <div class="extras-grid">
-            <div class="extra-c">
-              <div><div class="ec-name">&#x1F455; Laundry Basket</div><div class="ec-sub">Per basket</div></div>
-              <div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('👕 Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-            </div>
-            <div class="extra-c">
-              <div><div class="ec-name">&#x1F454; Folding Clothes</div><div class="ec-sub">Per session</div></div>
-              <div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('👔 Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-            </div>
-            <div class="extra-c">
-              <div><div class="ec-name">&#x1F525; Ironing</div><div class="ec-sub">KES 1,600/month</div></div>
-              <div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('🔥 Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-            </div>
-            <div class="extra-c">
-              <div><div class="ec-name">&#x1F373; Cooking</div><div class="ec-sub">KES 2,000/month</div></div>
-              <div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('🍳 Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-            </div>
-            <div class="extra-c">
-              <div><div class="ec-name">&#x1F45F; Shoe Wiping</div><div class="ec-sub">KES 1,200/month</div></div>
-              <div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('👟 Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div>
-            </div>
+            <div class="extra-c"><div><div class="ec-name">&#x1F455; Laundry Basket</div><div class="ec-sub">Per basket</div></div><div style="text-align:right"><div class="ec-price">KES 499</div><button class="bk" onclick="openModal('👕 Laundry Basket — KES 499/basket')" style="margin-top:6px">&#x1F4AC; Book</button></div></div>
+            <div class="extra-c"><div><div class="ec-name">&#x1F454; Folding Clothes</div><div class="ec-sub">Per session</div></div><div style="text-align:right"><div class="ec-price">KES 299</div><button class="bk" onclick="openModal('👔 Folding Clothes — KES 299/session')" style="margin-top:6px">&#x1F4AC; Book</button></div></div>
+            <div class="extra-c"><div><div class="ec-name">&#x1F525; Ironing</div><div class="ec-sub">KES 1,600/month</div></div><div style="text-align:right"><div class="ec-price">KES 400</div><button class="bk" onclick="openModal('🔥 Ironing Service — KES 400/session (or KES 1,600/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div></div>
+            <div class="extra-c"><div><div class="ec-name">&#x1F373; Cooking</div><div class="ec-sub">KES 2,000/month</div></div><div style="text-align:right"><div class="ec-price">KES 500</div><button class="bk" onclick="openModal('🍳 Cooking Service — KES 500/session (or KES 2,000/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div></div>
+            <div class="extra-c"><div><div class="ec-name">&#x1F45F; Shoe Wiping</div><div class="ec-sub">KES 1,200/month</div></div><div style="text-align:right"><div class="ec-price">KES 300</div><button class="bk" onclick="openModal('👟 Shoe Wiping — KES 300/session (or KES 1,200/month)')" style="margin-top:6px">&#x1F4AC; Book</button></div></div>
           </div>
         </div>
       </div>
 
-      <!-- 6 Fumigation -->
       <div class="acc-item" id="acc-fumigation">
         <button class="acc-trigger" onclick="toggleAcc('fumigation')" aria-expanded="false">
-          <div class="acc-trigger-left">
-            <div class="acc-emoji">&#x1F41B;</div>
-            <div><div class="acc-title">Fumigation</div><div class="acc-sub">Pest &amp; insect control for all house sizes &#x2014; from KES 2,500</div></div>
-          </div>
+          <div class="acc-trigger-left"><div class="acc-emoji">&#x1F41B;</div><div><div class="acc-title">Fumigation</div><div class="acc-sub">Pest &amp; insect control for all house sizes — from KES 2,500</div></div></div>
           <div class="acc-chevron">&#x25BC;</div>
         </button>
         <div class="acc-body">
-          <div class="price-table-wrap">
-            <table class="pt">
-              <thead><tr><th>House Size</th><th>Price</th><th>Book</th></tr></thead>
-              <tbody>
-                <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
-                <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="price-table-wrap"><table class="pt"><thead><tr><th>House Size</th><th>Price</th><th>Book</th></tr></thead><tbody>
+            <tr><td>Studio</td><td class="pv">KES 2,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — Studio (KES 2,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>1 Bedroom</td><td class="pv">KES 3,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 1 Bedroom (KES 3,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>2 Bedroom</td><td class="pv">KES 4,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 2 Bedroom (KES 4,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>3 Bedroom</td><td class="pv">KES 5,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 3 Bedroom (KES 5,500)')">&#x1F4AC; Book</button></td></tr>
+            <tr><td>4 Bedroom</td><td class="pv">KES 6,500</td><td><button class="bk" onclick="openModal('🐛 Fumigation — 4 Bedroom (KES 6,500)')">&#x1F4AC; Book</button></td></tr>
+          </tbody></table></div>
         </div>
       </div>
 
-    </div><!-- /accordion -->
+    </div>
   </div>
 </section>
 
@@ -572,9 +575,9 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
     <h2 class="section-title reveal">Book in <span>4 Easy Steps</span></h2>
     <p class="section-body reveal">Getting your home cleaned is as easy as sending a WhatsApp message. No apps, no portals.</p>
     <div class="steps-grid">
-      <div class="step-card reveal"><div class="step-num">1</div><h3>Choose Your Service</h3><p>Browse our pricing above and pick exactly what your home needs &#x2014; deep clean, subscription, fumigation, or more.</p></div>
-      <div class="step-card reveal"><div class="step-num">2</div><h3>Click Book</h3><p>Tap any "Book" button and fill in your name, area, and preferred date &#x2014; takes under 30 seconds.</p></div>
-      <div class="step-card reveal"><div class="step-num">3</div><h3>Send on WhatsApp</h3><p>WhatsApp opens with all your details ready. Just press Send &#x2014; we'll confirm your booking immediately.</p></div>
+      <div class="step-card reveal"><div class="step-num">1</div><h3>Choose Your Service</h3><p>Browse our pricing above and pick exactly what your home needs — deep clean, subscription, fumigation, or more.</p></div>
+      <div class="step-card reveal"><div class="step-num">2</div><h3>Click Book</h3><p>Tap any "Book" button and fill in your name, area, and preferred date — takes under 30 seconds.</p></div>
+      <div class="step-card reveal"><div class="step-num">3</div><h3>Send on WhatsApp</h3><p>WhatsApp opens with all your details ready. Just press Send — we'll confirm your booking immediately.</p></div>
       <div class="step-card reveal"><div class="step-num">4</div><h3>Enjoy a Spotless Home</h3><p>Our trained cleaners arrive on time and deliver a thorough, professional clean you can count on.</p></div>
     </div>
   </div>
@@ -585,7 +588,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
   <div class="container">
     <div class="eyebrow reveal">&#x2736; We Come to You</div>
     <h2 class="section-title reveal" style="color:#fff">Serving All of <span style="color:var(--light)">Nairobi</span></h2>
-    <p class="section-body reveal">We cover Nairobi and surrounding areas. Don't see yours? Just ask &#x2014; we likely cover it too.</p>
+    <p class="section-body reveal">We cover Nairobi and surrounding areas. Don't see yours? Just ask — we likely cover it too.</p>
     <div class="chips-wrap">
       <div class="chip reveal">&#x1F4CD; Utawala</div><div class="chip reveal">&#x1F4CD; Kawangware</div>
       <div class="chip reveal">&#x1F4CD; Ngong</div><div class="chip reveal">&#x1F4CD; Karen</div>
@@ -609,20 +612,83 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
     <div class="why-grid">
       <div class="why-visual reveal">
         <h2>We Make Nairobi Homes Shine</h2>
-        <p>Nyumbani Cleaning Services is built on reliability, professionalism, and genuine care. Every home we clean gets the full treatment &#x2014; no shortcuts.</p>
-        <div class="why-badge">
-          <div class="b-icon">&#x2B50;</div>
-          <div><div class="b-num">Top Rated</div><div class="b-sub">Nairobi Cleaning Service</div></div>
-        </div>
+        <p>Nyumbani Cleaning Services is built on reliability, professionalism, and genuine care. Every home we clean gets the full treatment — no shortcuts.</p>
+        <div class="why-badge"><div class="b-icon">&#x2B50;</div><div><div class="b-num">Top Rated</div><div class="b-sub">Nairobi Cleaning Service</div></div></div>
       </div>
       <ul class="why-points">
         <li class="why-pt reveal"><div class="why-pt-icon">&#x2705;</div><div><h4>Trusted &amp; Vetted Cleaners</h4><p>All staff are background-checked and trained for residential cleaning. Your home is in safe hands.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x26A1;</div><div><h4>Flexible Scheduling</h4><p>One-time deep cleans or weekly subscriptions &#x2014; on your schedule, at your convenience.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4B0;</div><div><h4>Transparent, Fair Pricing</h4><p>No surprises. All rates are clearly listed &#x2014; you know what you're paying before we arrive.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x26A1;</div><div><h4>Flexible Scheduling</h4><p>One-time deep cleans or weekly subscriptions — on your schedule, at your convenience.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4B0;</div><div><h4>Transparent, Fair Pricing</h4><p>No surprises. All rates are clearly listed — you know what you're paying before we arrive.</p></div></li>
         <li class="why-pt reveal"><div class="why-pt-icon">&#x1F4F1;</div><div><h4>Easy WhatsApp Booking</h4><p>No apps or portals needed. Just message us on WhatsApp and we handle everything from there.</p></div></li>
-        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F5FA;&#xFE0F;</div><div><h4>Wide Nairobi Coverage</h4><p>We cover 18+ areas across Nairobi and its surroundings &#x2014; from Karen to Thika Road and beyond.</p></div></li>
+        <li class="why-pt reveal"><div class="why-pt-icon">&#x1F5FA;&#xFE0F;</div><div><h4>Wide Nairobi Coverage</h4><p>We cover 18+ areas across Nairobi and its surroundings — from Karen to Thika Road and beyond.</p></div></li>
       </ul>
     </div>
+  </div>
+</section>
+
+<!-- OUR WORK -->
+<section class="section section-alt" id="work">
+  <div class="container">
+    <div class="eyebrow reveal">&#x2736; Our Work</div>
+    <h2 class="section-title reveal">See the <span>Results</span></h2>
+    <p class="section-body reveal">Real homes, real results. Take a look at what our team delivers on every visit.</p>
+    <div class="work-grid">
+      <div class="work-card reveal"><img src="work-photo-1.jpg" alt="Before and after kitchen clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 1</div><div class="work-label">After: Kitchen Deep Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-2.jpg" alt="Clean living room" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 2</div><div class="work-label">After: Living Room General Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-3.jpg" alt="Sofa after cleaning" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 3</div><div class="work-label">After: Sofa &amp; Carpet Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-4.jpg" alt="Bedroom after clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 4</div><div class="work-label">After: Bedroom Deep Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-5.jpg" alt="Bathroom after cleaning" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 5</div><div class="work-label">After: Bathroom Scrub</div></div>
+      <div class="work-card reveal"><img src="work-photo-6.jpg" alt="Mattress cleaning result" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Work Photo 6</div><div class="work-label">After: Mattress Clean</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+   REVIEWS — fully persistent via window.storage
+   Every review submitted is saved permanently.
+   You see a Delete button on every card.
+   Clicking Delete removes it from storage forever.
+═══════════════════════════════════════════════ -->
+<section class="section" id="reviews">
+  <div class="container">
+    <div class="eyebrow reveal">&#x2736; Customer Reviews</div>
+    <h2 class="section-title reveal">What Our <span>Clients Say</span></h2>
+
+    <div class="reviews-header reveal">
+      <div class="reviews-avg">
+        <div class="big" id="avgScore">5.0</div>
+        <div class="stars-display" id="avgStars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <div class="count" id="reviewCount">Loading reviews...</div>
+      </div>
+      <div class="reviews-bar">
+        <h3>Trusted by Nairobi Families</h3>
+        <p>Our customers love the quality, reliability, and care we bring to every home. Leave your own review below!</p>
+      </div>
+    </div>
+
+    <!-- Write-a-review form -->
+    <div class="review-form-wrap reveal">
+      <h4>&#x270D;&#xFE0F; Leave a Review</h4>
+      <div class="star-picker" id="starPicker">
+        <button onclick="setRating(1)" title="1 star">&#x2605;</button>
+        <button onclick="setRating(2)" title="2 stars">&#x2605;</button>
+        <button onclick="setRating(3)" title="3 stars">&#x2605;</button>
+        <button onclick="setRating(4)" title="4 stars">&#x2605;</button>
+        <button onclick="setRating(5)" title="5 stars">&#x2605;</button>
+      </div>
+      <div class="review-form-row">
+        <input class="rf-input" id="rfName"    type="text" placeholder="Your name *" />
+        <input class="rf-input" id="rfService" type="text" placeholder="Service you used (optional)" />
+      </div>
+      <textarea class="rf-textarea" id="rfComment" placeholder="Tell us about your experience... *"></textarea>
+      <button class="rf-submit" id="rfSubmitBtn" onclick="submitReview()">&#x2B50; Submit Review</button>
+    </div>
+
+    <!-- Review cards render here -->
+    <div class="reviews-loading" id="reviewsLoading">Loading reviews&#x2026;</div>
+    <div class="reviews-grid" id="reviewsGrid" style="display:none"></div>
+    <div class="reviews-empty" id="reviewsEmpty" style="display:none">No reviews yet. Be the first to leave one above! &#x1F60A;</div>
+
   </div>
 </section>
 
@@ -644,12 +710,12 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
         </div>
         <a href="https://wa.me/254118624445?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%27d%20like%20to%20book%20a%20service." target="_blank" class="wa-btn-full">
           <span style="font-size:1.3rem">&#x1F4AC;</span>
-          <span class="wt"><strong>Message on WhatsApp</strong><small>+254 118 624 445 &#x2014; Tap to open chat</small></span>
+          <span class="wt"><strong>Message on WhatsApp</strong><small>+254 118 624 445 — Tap to open chat</small></span>
           <span>&#x2192;</span>
         </a>
         <a href="https://wa.me/254728315732?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%27d%20like%20to%20book%20a%20service." target="_blank" class="wa-btn-full" style="background:#1a8a7a">
           <span style="font-size:1.3rem">&#x1F4AC;</span>
-          <span class="wt"><strong>Alternate Number</strong><small>0728 315 732 &#x2014; Tap to open chat</small></span>
+          <span class="wt"><strong>Alternate Number</strong><small>0728 315 732 — Tap to open chat</small></span>
           <span>&#x2192;</span>
         </a>
       </div>
@@ -665,9 +731,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
           <div class="qr-row"><span class="name">&#x1F41B; Fumigation (Studio)</span><span class="price">KES 2,500</span></div>
           <div class="qr-row"><span class="name">&#x1F3E0; General Studio</span><span class="price">KES 999</span></div>
         </div>
-        <button class="wa-center" onclick="openModal('General Enquiry &#x2014; Any Service')">
-          &#x1F4AC; Book Any Service via WhatsApp
-        </button>
+        <button class="wa-center" onclick="openModal('General Enquiry — Any Service')">&#x1F4AC; Book Any Service via WhatsApp</button>
       </div>
     </div>
   </div>
@@ -678,10 +742,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="f-brand">
-          <img src="nyumbanilogo.png" alt="Nyumbani" class="f-logo" onerror="this.style.display='none'" />
-          <div class="f-name">Nyumbani Cleaning Services</div>
-        </div>
+        <div class="f-brand"><img src="nyumbanilogo.png" alt="Nyumbani" class="f-logo" onerror="this.style.display='none'" /><div class="f-name">Nyumbani Cleaning Services</div></div>
         <p class="f-desc">A Clean Home, A Better Life. Serving Nairobi and surrounding areas with professional, reliable cleaning services you can trust.</p>
       </div>
       <div class="f-col">
@@ -712,72 +773,262 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
   </div>
 </footer>
 
-<!-- Floating WhatsApp -->
 <a href="https://wa.me/254118624445?text=Hello%20Nyumbani!%20I%27d%20like%20to%20book%20a%20cleaning%20service." target="_blank" class="float-wa" title="WhatsApp Us">&#x1F4AC;</a>
 
 <script>
-/* ── Min date = today ── */
+/* ════════════════════════════════════════════════
+   PERSISTENT REVIEWS via window.storage
+   ▸ Every review lives in shared storage under key  reviews:all
+   ▸ Anyone who visits sees every review
+   ▸ Only the Delete button removes a review from storage
+   ▸ Reviews survive page refresh, new visitors, everything
+════════════════════════════════════════════════ */
+
+var STORAGE_KEY = 'reviews:all';
+var selectedRating = 0;
+
+/* ── helpers ── */
+function esc(str){
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function starsHtml(n){
+  var s='';
+  for(var i=0;i<5;i++) s += i<n ? '&#x2605;' : '&#x2606;';
+  return s;
+}
+function monthLabel(){
+  return new Date().toLocaleDateString('en-KE',{month:'long',year:'numeric'});
+}
+
+/* ── load reviews from storage ── */
+async function loadReviews(){
+  var grid = document.getElementById('reviewsGrid');
+  var loading = document.getElementById('reviewsLoading');
+  var empty = document.getElementById('reviewsEmpty');
+
+  try {
+    var result = await window.storage.get(STORAGE_KEY, true); /* shared=true so all visitors see same reviews */
+    var reviews = result ? JSON.parse(result.value) : [];
+    renderReviews(reviews);
+  } catch(e) {
+    /* key doesn't exist yet = no reviews */
+    renderReviews([]);
+  }
+
+  loading.style.display = 'none';
+  grid.style.display = 'grid';
+}
+
+/* ── render all review cards ── */
+function renderReviews(reviews){
+  var grid = document.getElementById('reviewsGrid');
+  var empty = document.getElementById('reviewsEmpty');
+  grid.innerHTML = '';
+
+  if(!reviews.length){
+    empty.style.display = 'block';
+    updateStats(reviews);
+    return;
+  }
+  empty.style.display = 'none';
+
+  /* newest first */
+  reviews.slice().reverse().forEach(function(r){
+    var card = document.createElement('div');
+    card.className = 'review-card';
+    card.setAttribute('data-id', r.id);
+    card.innerHTML =
+      '<button class="review-delete" onclick="deleteReview(\''+r.id+'\')">&#x2715; Delete</button>'+
+      '<div class="review-card-top">'+
+        '<div class="reviewer-info">'+
+          '<div class="rname">'+esc(r.name)+'</div>'+
+          '<div class="rdate">'+esc(r.dateLabel)+'</div>'+
+        '</div>'+
+        '<div class="review-stars">'+starsHtml(r.stars)+'</div>'+
+      '</div>'+
+      '<div class="review-text">'+esc(r.comment)+'</div>';
+    grid.appendChild(card);
+  });
+
+  updateStats(reviews);
+}
+
+/* ── update average score display ── */
+function updateStats(reviews){
+  var total = reviews.length;
+  var count = document.getElementById('reviewCount');
+  var avgEl = document.getElementById('avgScore');
+  var starsEl = document.getElementById('avgStars');
+
+  if(!total){
+    count.textContent = 'No reviews yet';
+    avgEl.textContent = '—';
+    starsEl.innerHTML = '&#x2606;&#x2606;&#x2606;&#x2606;&#x2606;';
+    return;
+  }
+
+  var sum = reviews.reduce(function(a,r){return a+r.stars;},0);
+  var avg = (sum/total).toFixed(1);
+  avgEl.textContent = avg;
+  count.textContent = 'Based on '+total+' review'+(total===1?'':'s');
+  var n = Math.round(parseFloat(avg));
+  starsEl.innerHTML = starsHtml(n);
+}
+
+/* ── submit a new review ── */
+async function submitReview(){
+  var name    = document.getElementById('rfName').value.trim();
+  var service = document.getElementById('rfService').value.trim();
+  var comment = document.getElementById('rfComment').value.trim();
+
+  if(!name)   { alert('Please enter your name.'); document.getElementById('rfName').focus(); return; }
+  if(!selectedRating){ alert('Please select a star rating.'); return; }
+  if(!comment){ alert('Please write a short review.'); document.getElementById('rfComment').focus(); return; }
+
+  var btn = document.getElementById('rfSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    /* load existing reviews */
+    var existing = [];
+    try {
+      var res = await window.storage.get(STORAGE_KEY, true);
+      if(res) existing = JSON.parse(res.value);
+    } catch(e){ existing = []; }
+
+    /* build new review object */
+    var review = {
+      id:        'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+      name:      name,
+      dateLabel: (service ? service + ' \u00B7 ' : '') + monthLabel(),
+      stars:     selectedRating,
+      comment:   comment,
+      ts:        Date.now()
+    };
+
+    existing.push(review);
+
+    /* save back to shared storage */
+    await window.storage.set(STORAGE_KEY, JSON.stringify(existing), true);
+
+    /* reset form */
+    document.getElementById('rfName').value    = '';
+    document.getElementById('rfService').value = '';
+    document.getElementById('rfComment').value = '';
+    selectedRating = 0;
+    document.querySelectorAll('#starPicker button').forEach(function(b){b.classList.remove('lit');});
+
+    /* re-render */
+    renderReviews(existing);
+
+    /* scroll to the new card */
+    var first = document.querySelector('#reviewsGrid .review-card');
+    if(first) first.scrollIntoView({behavior:'smooth', block:'center'});
+
+  } catch(err){
+    alert('Sorry, could not save your review. Please try again.');
+    console.error(err);
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '&#x2B50; Submit Review';
+}
+
+/* ── delete a review by id ── */
+async function deleteReview(id){
+  if(!confirm('Delete this review permanently?')) return;
+
+  try {
+    var res = await window.storage.get(STORAGE_KEY, true);
+    var reviews = res ? JSON.parse(res.value) : [];
+    reviews = reviews.filter(function(r){ return r.id !== id; });
+    await window.storage.set(STORAGE_KEY, JSON.stringify(reviews), true);
+    renderReviews(reviews);
+  } catch(err){
+    alert('Could not delete. Please try again.');
+    console.error(err);
+  }
+}
+
+/* ── star picker ── */
+function setRating(n){
+  selectedRating = n;
+  document.querySelectorAll('#starPicker button').forEach(function(b,i){
+    b.classList.toggle('lit', i < n);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   MIN DATE
+════════════════════════════════════════════════ */
 (function(){
   var t=new Date();
   document.getElementById('fieldDate').min=
     t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
 })();
 
-/* ── NAV shadow ── */
+/* ════════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════════ */
 window.addEventListener('scroll',function(){
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>10);
 });
-
-/* ── Hamburger ── */
 var ham=document.getElementById('hamburger');
 var mob=document.getElementById('mobileMenu');
 ham.addEventListener('click',function(){ham.classList.toggle('open');mob.classList.toggle('open');});
 function closeMobile(){ham.classList.remove('open');mob.classList.remove('open');}
 
-/* ── Scroll reveal ── */
+/* ════════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════════ */
 var ro=new IntersectionObserver(function(entries){
   entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
 },{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=(i%6)*0.07+'s';ro.observe(el);});
 
-/* ══════════════════════════════
+/* ════════════════════════════════════════════════
+   HERO SLIDESHOW
+════════════════════════════════════════════════ */
+var slides=document.querySelectorAll('.hero-slide');
+var dots=document.querySelectorAll('.slide-dot');
+var current=0,timer;
+function goSlide(n){slides[current].classList.remove('active');dots[current].classList.remove('active');current=(n+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active');resetTimer();}
+function moveSlide(dir){goSlide(current+dir);}
+function resetTimer(){clearInterval(timer);timer=setInterval(function(){goSlide(current+1);},5000);}
+resetTimer();
+
+/* ════════════════════════════════════════════════
    ACCORDION
-══════════════════════════════ */
+════════════════════════════════════════════════ */
 function toggleAcc(id){
   var item=document.getElementById('acc-'+id);
   var trigger=item.querySelector('.acc-trigger');
   var isOpen=item.classList.contains('open');
-  if(isOpen){
-    item.classList.remove('open');
-    trigger.setAttribute('aria-expanded','false');
-  } else {
-    item.classList.add('open');
-    trigger.setAttribute('aria-expanded','true');
-  }
+  item.classList.toggle('open',!isOpen);
+  trigger.setAttribute('aria-expanded',String(!isOpen));
 }
-
-/* Used by footer links: ensure the panel is open, then let the href scroll there */
 function openAcc(id){
   var item=document.getElementById('acc-'+id);
-  var trigger=item.querySelector('.acc-trigger');
   item.classList.add('open');
-  trigger.setAttribute('aria-expanded','true');
+  item.querySelector('.acc-trigger').setAttribute('aria-expanded','true');
 }
 
-/* ══════════════════════════════
+/* ════════════════════════════════════════════════
    BOOKING MODAL
-══════════════════════════════ */
-var modal         =document.getElementById('bookingModal');
-var modalCloseBtn =document.getElementById('modalClose');
-var modalBadge    =document.getElementById('modalServiceBadge');
-var modalSubmit   =document.getElementById('modalSubmit');
+════════════════════════════════════════════════ */
+var modal=document.getElementById('bookingModal');
+var modalCloseBtn=document.getElementById('modalClose');
+var modalBadge=document.getElementById('modalServiceBadge');
+var modalSubmitBtn=document.getElementById('modalSubmit');
 var currentService='';
 
 function openModal(serviceName){
   currentService=serviceName;
   modalBadge.textContent=serviceName;
   ['fieldName','fieldPhone','fieldArea','fieldDate','fieldTime','fieldNotes'].forEach(function(id){document.getElementById(id).value='';});
-  /* refresh min date */
   var t=new Date();
   document.getElementById('fieldDate').min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
   document.getElementById('fieldName').classList.remove('field-error');
@@ -786,38 +1037,28 @@ function openModal(serviceName){
   document.body.style.overflow='hidden';
   setTimeout(function(){document.getElementById('fieldName').focus();},120);
 }
-
 function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
-
 modalCloseBtn.addEventListener('click',closeModal);
 modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 
-modalSubmit.addEventListener('click',function(){
-  var name =document.getElementById('fieldName').value.trim();
+modalSubmitBtn.addEventListener('click',function(){
+  var name=document.getElementById('fieldName').value.trim();
   var phone=document.getElementById('fieldPhone').value.trim();
-  var area =document.getElementById('fieldArea').value.trim();
-  var date =document.getElementById('fieldDate').value;
-  var time =document.getElementById('fieldTime').value;
+  var area=document.getElementById('fieldArea').value.trim();
+  var date=document.getElementById('fieldDate').value;
+  var time=document.getElementById('fieldTime').value;
   var notes=document.getElementById('fieldNotes').value.trim();
-
-  /* validate */
   var valid=true;
   document.getElementById('fieldName').classList.remove('field-error');
   document.getElementById('fieldArea').classList.remove('field-error');
   if(!name){document.getElementById('fieldName').classList.add('field-error');document.getElementById('fieldName').focus();valid=false;}
   if(!area){document.getElementById('fieldArea').classList.add('field-error');if(valid)document.getElementById('fieldArea').focus();valid=false;}
   if(!valid)return;
-
-  /* format date */
   var dateStr='';
   if(date){var d=new Date(date+'T12:00:00');dateStr=d.toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
-
-  /* format time */
   var timeStr='';
   if(time){var p=time.split(':');var hr=parseInt(p[0],10);var mn=p[1];var ampm=hr>=12?'PM':'AM';var h12=hr%12||12;timeStr=h12+':'+mn+' '+ampm;}
-
-  /* build message */
   var lines=[];
   lines.push('Hello Nyumbani Cleaning Services! \uD83D\uDC4B');
   lines.push('');
@@ -832,13 +1073,14 @@ modalSubmit.addEventListener('click',function(){
   if(notes)lines.push('\uD83D\uDCDD *Additional Notes:* '+notes);
   lines.push('');
   lines.push('Kindly confirm availability. Thank you! \uD83D\uDE4F');
-
   window.open('https://wa.me/254118624445?text='+encodeURIComponent(lines.join('\n')),'_blank');
   closeModal();
 });
-
 document.getElementById('fieldName').addEventListener('input',function(){this.classList.remove('field-error');});
 document.getElementById('fieldArea').addEventListener('input',function(){this.classList.remove('field-error');});
+
+/* ── kick off reviews load ── */
+loadReviews();
 </script>
 </body>
 </html>
