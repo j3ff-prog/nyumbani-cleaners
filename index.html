@@ -27,6 +27,22 @@ ul{list-style:none}
 }
 body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
+
+/* ── Responsive images — all photo contexts ── */
+.hero-slide img,
+.hero-img-card img,
+.about-img-wrap img,
+.svc-card-img img,
+.gallery-slide img,
+.work-card img,
+.f-logo,
+.nav-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
 /* ═══════════════════════════════════════
    BOOKING MODAL
 ═══════════════════════════════════════ */
@@ -91,12 +107,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var
 ═══════════════════════════════════════ */
 #home{position:relative;overflow:hidden;min-height:92svh;display:flex;align-items:center}
 .hero-slides{position:absolute;inset:0;z-index:0}
-.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center;overflow:hidden}
+.hero-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .hero-slide.active{opacity:1}
 .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(11,36,89,.85) 0%,rgba(22,58,158,.72) 55%,rgba(25,118,210,.45) 100%)}
-.slide-1{background-image:url('hero-photo-1.jpg');background-color:#0b2459}
-.slide-2{background-image:url('hero-photo-2.jpg');background-color:#163a9e}
-.slide-3{background-image:url('hero-photo-3.jpg');background-color:#1976d2}
+.slide-1{background-image:url('hero-photo-1.jpeg');background-color:#0b2459}
+.slide-2{background-image:url('hero-photo-2.jpeg');background-color:#163a9e}
+.slide-3{background-image:url('hero-photo-3.jpeg');background-color:#1976d2}
 .slide-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
 .slide-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);border:none;cursor:pointer;transition:all .25s;padding:0}
 .slide-dot.active{background:#fff;width:22px;border-radius:4px}
@@ -322,7 +339,9 @@ table.pt td{padding:13px 18px;font-size:.88rem;border-bottom:1px solid var(--bor
 .work-card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .4s}
 .work-card:hover img{transform:scale(1.05)}
 .work-label{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(11,36,89,.85),transparent);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.3px}
-.work-ph{width:100%;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:6px;font-size:.78rem;background:var(--border)}
+.work-ph{width:100%;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:6px;font-size:.78rem;background:var(--border);position:absolute;inset:0;z-index:0}
+.work-card{position:relative}
+.work-card img{width:100%;height:220px;object-fit:cover;object-position:center;display:block;transition:transform .4s;position:relative;z-index:1}
 .work-ph span{font-size:2rem}
 
 /* ═══════════════════════════════════════
@@ -504,9 +523,9 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 <!-- HERO -->
 <section id="home">
   <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide slide-1 active"></div>
-    <div class="hero-slide slide-2"></div>
-    <div class="hero-slide slide-3"></div>
+    <div class="hero-slide slide-1 active"><img src="svc-subscription.jpeg" alt="Nyumbani Cleaning Services logo"></div>
+    <div class="hero-slide slide-2"><img src="slideshow1.jpeg" alt="Slideshow Image 1"></div>
+    <div class="hero-slide slide-3"><img src="slideshow2.jpeg" alt="Slideshow Image 2"></div>
   </div>
   <button class="slide-arrow prev" onclick="moveSlide(-1)" aria-label="Previous">&#x2039;</button>
   <button class="slide-arrow next" onclick="moveSlide(1)"  aria-label="Next">&#x203A;</button>
@@ -526,16 +545,12 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
         <a href="https://wa.me/254118624445?text=Hello%20Nyumbani%20Cleaning%20Services!%20I%20would%20like%20to%20book%20a%20service." target="_blank" class="btn-wa-lg">&#x1F4AC; Book on WhatsApp</a>
         <a href="#services" class="btn-ghost">Our Services &#x2193;</a>
       </div>
-      <div class="hero-stats">
-        <div class="hs"><div class="hs-num">1,000+</div><div class="hs-label">Happy Customers</div></div>
-        <div class="hs"><div class="hs-num">100+</div><div class="hs-label">Trained Women</div></div>
-        <div class="hs"><div class="hs-num">18+</div><div class="hs-label">Areas Served</div></div>
-      </div>
+     
     </div>
     <!-- Hero image card (hidden on mobile) -->
     <div class="hero-img-card">
-      <img src="hero-main-photo.jpg" alt="Nyumbani professional cleaner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div class="hero-img-placeholder"><span>&#x1F9F9;</span>Add hero-main-photo.jpg</div>
+      <img src="hero-main-photo.jpeg" alt="Nyumbani professional cleaner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div class="hero-img-placeholder"><span>&#x1F9F9;</span>Add hero-main-photo.jpeg</div>
       <div class="hero-img-badge">
         <div class="hb-icon">&#x2705;</div>
         <div class="hb-text"><strong>Vetted &amp; Trained Staff</strong><small>Background-checked professionals</small></div>
@@ -559,10 +574,10 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 <section class="section" id="about">
   <div class="container">
     <div class="about-grid">
-      <!-- Replace about-photo.jpg with a real team photo -->
+      <!-- Replace about-photo.jpeg with a real team photo -->
       <div class="about-img-wrap reveal">
-        <img src="about-photo.jpg" alt="Nyumbani cleaning team" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="about-img-placeholder"><span>&#x1F469;&#x200D;&#x1F9F9;</span>Add about-photo.jpg</div>
+        <img src="about-photo.jpeg" alt="Nyumbani cleaning team" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="about-img-placeholder"><span>&#x1F469;&#x200D;&#x1F9F9;</span>Add about-photo.jpeg</div>
         <div class="about-img-badge">
           <div class="abi">&#x1F3C6;</div>
           <div class="abt"><strong>Nairobi's Trusted Choice</strong><small>Professional &amp; Reliable Since Day 1</small></div>
@@ -573,21 +588,16 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
         <div class="eyebrow reveal">&#x2736; About Us</div>
         <!-- ══ OWNER: Replace the paragraph text below with your own About Us text ══ -->
         <h2 class="reveal">Nairobi's <span style="color:var(--sky)">Premium Home</span> Care Service</h2>
-        <p class="reveal">Nyumbani Cleaning Services is built on three pillars: reliability, professionalism, and genuine care. Every cleaner on our team is thoroughly trained and background-checked so that your home is always in safe, skilled hands.</p>
-        <p class="reveal">We serve homes across Nairobi and far beyond — from Kilimani to Tala, from Karen to Kitengela. Whether you need a quick general clean or a full deep clean, we show up on time and deliver results you can see.</p>
+        <p class="reveal">At Nyumbani Cleaning Services, we believe a clean space creates peace of mind. We are a trusted cleaning company dedicated to providing professional, reliable, and affordable cleaning solutions for homes, offices, apartments, and Airbnb spaces.
+</p>
+        <p class="reveal">Our team is trained to deliver high-quality services including deep cleaning, regular house cleaning, laundry services, move-in/move-out cleaning, and organization services. We pay attention to every detail to ensure your space is spotless, fresh, and comfortable.</p>
+        <p class="reveal">Beyond cleaning, we are passionate about empowering communities. Through employment and training opportunities, Nyumbani Cleaning Services has empowered more than 1,000 women across Nairobi, Kenya, helping them earn a living and build a better future for themselves and their families.</p>
+        <p class="reveal">At Nyumbani Cleaning, customer satisfaction is our priority, and we take pride in creating clean and healthy environments for our clients across Kenya.</p>
         <!-- ══ OWNER: Replace the Mission text below with your mission statement ══ -->
         <div class="mission-box reveal">
           <h4>&#x1F3AF; Our Mission</h4>
           <p>To redefine home care in Kenya by combining professionalism, reliability, and genuine care — while empowering women with skills and economic opportunity.</p>
         </div>
-        <div class="about-chips reveal">
-          <div class="a-chip">&#x2705; Vetted Staff</div>
-          <div class="a-chip">&#x1F4CD; 18+ Areas</div>
-          <div class="a-chip">&#x1F4AC; WhatsApp Booking</div>
-          <div class="a-chip">&#x1F4B0; Fair Pricing</div>
-          <div class="a-chip">&#x1F469;&#x200D;&#x1F9F9; Women-Led</div>
-        </div>
-        <a href="https://wa.me/254118624445?text=Hello!%20I%27d%20like%20to%20know%20more%20about%20Nyumbani%20Cleaning%20Services." target="_blank" class="btn-primary reveal">&#x1F4AC; Get In Touch</a>
       </div>
     </div>
   </div>
@@ -605,8 +615,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 1. Subscription / Regular Cleaning -->
       <div class="svc-card reveal svc-stripe-blue">
         <div class="svc-card-img">
-          <img src="svc-subscription.jpg" alt="Regular subscription cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F4C5;</span>Add svc-subscription.jpg</div>
+          <img src="svc-subscription.jpeg" alt="Regular subscription cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F4C5;</span>Add svc-subscription.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Subscription Packages</h3>
@@ -623,8 +633,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 2. Deep Cleaning with Learn More -->
       <div class="svc-card reveal svc-stripe-teal">
         <div class="svc-card-img">
-          <img src="svc-deep-clean.jpg" alt="Deep cleaning service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F9F9;</span>Add svc-deep-clean.jpg</div>
+          <img src="svc-deep-clean.jpeg" alt="Deep cleaning service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F9F9;</span>Add svc-deep-clean.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Deep Cleaning</h3>
@@ -658,8 +668,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 3. General Cleaning -->
       <div class="svc-card reveal svc-stripe-blue">
         <div class="svc-card-img">
-          <img src="svc-general.jpg" alt="General home cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F3E0;</span>Add svc-general.jpg</div>
+          <img src="svc-general.jpeg" alt="General home cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F3E0;</span>Add svc-general.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>General Cleaning</h3>
@@ -676,8 +686,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 4. Sofa, Mattress & Carpet -->
       <div class="svc-card reveal svc-stripe-amber">
         <div class="svc-card-img">
-          <img src="svc-sofa.jpg" alt="Sofa and mattress cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F6CB;&#xFE0F;</span>Add svc-sofa.jpg</div>
+          <img src="svc-sofa.jpeg" alt="Sofa and mattress cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F6CB;&#xFE0F;</span>Add svc-sofa.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Sofa, Mattress &amp; Carpet</h3>
@@ -694,8 +704,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 5. Laundry & Extras -->
       <div class="svc-card reveal svc-stripe-blue">
         <div class="svc-card-img">
-          <img src="svc-laundry.jpg" alt="Laundry and ironing service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F455;</span>Add svc-laundry.jpg</div>
+          <img src="svc-laundry.jpeg" alt="Laundry and ironing service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F455;</span>Add svc-laundry.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Laundry &amp; Extra Services</h3>
@@ -712,8 +722,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 6. Fumigation -->
       <div class="svc-card reveal svc-stripe-rose">
         <div class="svc-card-img">
-          <img src="svc-fumigation.jpg" alt="Fumigation and pest control" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F41B;</span>Add svc-fumigation.jpg</div>
+          <img src="svc-fumigation.jpeg" alt="Fumigation and pest control" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F41B;</span>Add svc-fumigation.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Fumigation &amp; Pest Control</h3>
@@ -743,8 +753,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 7. Toilet Bleaching (NEW) -->
       <div class="svc-card reveal svc-stripe-sky">
         <div class="svc-card-img">
-          <img src="svc-toilet.jpg" alt="Toilet bleaching and bathroom cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F6BD;</span>Add svc-toilet.jpg</div>
+          <img src="svc-toilet.jpeg" alt="Toilet bleaching and bathroom cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F6BD;</span>Add svc-toilet.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Toilet Bleaching &amp; Bathroom Deep Clean</h3>
@@ -761,8 +771,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 7. Toilet Bleaching (NEW) -->
       <div class="svc-card reveal svc-stripe-sky">
         <div class="svc-card-img">
-          <img src="svc-moving.jpg" alt="Toilet bleaching and bathroom cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F6BD;</span>Add svc-moving.jpg</div>
+          <img src="svc-moving.jpeg" alt="Toilet bleaching and bathroom cleaning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F6BD;</span>Add svc-moving.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Moving in/out house cleaning</h3>
@@ -779,8 +789,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 8. Meal Prep (NEW) -->
       <div class="svc-card reveal svc-stripe-amber">
         <div class="svc-card-img">
-          <img src="svc-meal-prep.jpg" alt="Meal preparation service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F373;</span>Add svc-meal-prep.jpg</div>
+          <img src="svc-meal-prep.jpeg" alt="Meal preparation service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F373;</span>Add svc-meal-prep.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Meal Preparation</h3>
@@ -797,8 +807,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 9. Nanny & Childcare (NEW) -->
       <div class="svc-card reveal svc-stripe-purple">
         <div class="svc-card-img">
-          <img src="svc-nanny.jpg" alt="Nanny and childcare service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F469;&#x200D;&#x1F467;</span>Add svc-nanny.jpg</div>
+          <img src="svc-nanny.jpeg" alt="Nanny and childcare service" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F469;&#x200D;&#x1F467;</span>Add svc-nanny.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Nanny &amp; Childcare</h3>
@@ -815,8 +825,8 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
       <!-- 10. Kienyeji Chicken / Poultry (NEW) -->
       <div class="svc-card reveal svc-stripe-green">
         <div class="svc-card-img">
-          <img src="svc-chicken.jpg" alt="Fresh kienyeji chicken from our poultry farm" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="svc-img-placeholder"><span>&#x1F413;</span>Add svc-chicken.jpg</div>
+          <img src="svc-chicken.jpeg" alt="Fresh kienyeji chicken from our poultry farm" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="svc-img-placeholder"><span>&#x1F413;</span>Add svc-chicken.jpeg</div>
         </div>
         <div class="svc-card-body">
           <h3>Fresh Kienyeji Chicken &#x1F430;</h3>
@@ -835,24 +845,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
 </section>
 
 <!-- GALLERY CAROUSEL -->
-<section id="gallery">
-  <div class="gallery-carousel" id="galleryCarousel">
-    <div class="gallery-track" id="galleryTrack">
-      <div class="gallery-slide"><img src="gallery-photo-1.jpg" alt="Nyumbani cleaning team at work" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Add gallery-photo-1.jpg</div></div>
-      <div class="gallery-slide"><img src="gallery-photo-2.jpg" alt="Sparkling clean living room" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Add gallery-photo-2.jpg</div></div>
-      <div class="gallery-slide"><img src="gallery-photo-3.jpg" alt="Kitchen deep clean result" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Add gallery-photo-3.jpg</div></div>
-      <div class="gallery-slide"><img src="gallery-photo-4.jpg" alt="Sofa and mattress cleaning" onerror="this.style.display='none'" /><div class="ph"><span>&#x1F4F7;</span>Add gallery-photo-4.jpg</div></div>
-    </div>
-    <button class="gc-arrow gprev" onclick="galleryMove(-1)" aria-label="Previous">&#x2039;</button>
-    <button class="gc-arrow gnext" onclick="galleryMove(1)"  aria-label="Next">&#x203A;</button>
-    <div class="gc-dots" id="galleryDots">
-      <button class="gc-dot active" onclick="galleryGo(0)"></button>
-      <button class="gc-dot"        onclick="galleryGo(1)"></button>
-      <button class="gc-dot"        onclick="galleryGo(2)"></button>
-      <button class="gc-dot"        onclick="galleryGo(3)"></button>
-    </div>
-  </div>
-</section>
+
 
 <!-- PRICING -->
 <section class="section" id="pricing">
@@ -1054,12 +1047,11 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
     <h2 class="section-title reveal">See the <span>Results</span></h2>
     <p class="section-body reveal">Real homes, real results. See what our team delivers on every visit.</p>
     <div class="work-grid">
-      <div class="work-card reveal"><img src="work-photo-1.jpg" alt="After: Kitchen Deep Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-1.jpg</div><div class="work-label">After: Kitchen Deep Clean</div></div>
-      <div class="work-card reveal"><img src="work-photo-2.jpg" alt="After: Living Room Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-2.jpg</div><div class="work-label">After: Living Room General Clean</div></div>
-      <div class="work-card reveal"><img src="work-photo-3.jpg" alt="After: Sofa & Carpet Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-3.jpg</div><div class="work-label">After: Sofa &amp; Carpet Clean</div></div>
-      <div class="work-card reveal"><img src="work-photo-4.jpg" alt="After: Bedroom Deep Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-4.jpg</div><div class="work-label">After: Bedroom Deep Clean</div></div>
-      <div class="work-card reveal"><img src="work-photo-5.jpg" alt="After: Bathroom Scrub" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-5.jpg</div><div class="work-label">After: Bathroom Bleach &amp; Scrub</div></div>
-      <div class="work-card reveal"><img src="work-photo-6.jpg" alt="After: Mattress Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-6.jpg</div><div class="work-label">After: Mattress Deep Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-1.jpeg" alt="After: Kitchen Deep Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-1.jpeg</div><div class="work-label">After: Kitchen Deep Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-2.jpeg" alt="After: Living Room Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-2.jpeg</div><div class="work-label">After: Living Room General Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-3.jpeg" alt="After: Sofa & Carpet Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-3.jpeg</div><div class="work-label">After: Sofa &amp; Carpet Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-4.jpeg" alt="After: Bedroom Deep Clean" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-4.jpeg</div><div class="work-label">After: Bedroom Deep Clean</div></div>
+      <div class="work-card reveal"><img src="work-photo-5.jpeg" alt="After: Bathroom Scrub" onerror="this.style.display='none'" /><div class="work-ph"><span>&#x1F9F9;</span>Add work-photo-5.jpeg</div><div class="work-label">After: Bathroom Bleach &amp; Scrub</div></div>
     </div>
   </div>
 </section>
