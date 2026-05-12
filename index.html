@@ -1246,7 +1246,7 @@ footer{background:var(--navy);color:#fff;padding:56px 24px 28px}
    GOOGLE SHEETS URL — paste yours here
    See the setup instructions in the Reviews section above
 ════════════════════════════════════════════════ */
-var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxoXWwIw8lGsfG9RWSHmDPaqqJwiMBssyQjTslSKbQsRFGPmmfyB1M_wNcKLGuzif8a9A/exec';
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzRVUGHfy8lGA2vs6zmR1is2WXZEabZapYWrzXZl3aiCdv6h8x4sVM-XnjL0ZSwD4lQNw/exec';
 
 /* ─── Min date = today ─── */
 (function(){
@@ -1397,7 +1397,7 @@ function loadReviews(){
   empty.style.display='none';
 
   /* If SHEET_URL not yet configured, show a placeholder message */
-  if(SHEET_URL==='https://script.google.com/macros/s/AKfycbxoXWwIw8lGsfG9RWSHmDPaqqJwiMBssyQjTslSKbQsRFGPmmfyB1M_wNcKLGuzif8a9A/exec'){
+  if(SHEET_URL==='https://script.google.com/macros/s/AKfycbzRVUGHfy8lGA2vs6zmR1is2WXZEabZapYWrzXZl3aiCdv6h8x4sVM-XnjL0ZSwD4lQNw/exec'){
     loading.textContent='Reviews will appear here once Google Sheets is connected (see setup instructions above the Reviews section).';
     return;
   }
@@ -1455,7 +1455,7 @@ function submitReview(){
   if(!name){alert('Please enter your name.');document.getElementById('rfName').focus();return;}
   if(!selectedRating){alert('Please select a star rating.');return;}
   if(!comment){alert('Please write a short review.');document.getElementById('rfComment').focus();return;}
-  if(SHEET_URL==='https://script.google.com/macros/s/AKfycbxoXWwIw8lGsfG9RWSHmDPaqqJwiMBssyQjTslSKbQsRFGPmmfyB1M_wNcKLGuzif8a9A/exec'){alert('Reviews are not yet connected to a database. Please set up Google Sheets first (see instructions in the code).');return;}
+  if(SHEET_URL==='https://script.google.com/macros/s/AKfycbzRVUGHfy8lGA2vs6zmR1is2WXZEabZapYWrzXZl3aiCdv6h8x4sVM-XnjL0ZSwD4lQNw/exec'){alert('Reviews are not yet connected to a database. Please set up Google Sheets first (see instructions in the code).');return;}
 
   var btn=document.getElementById('rfSubmitBtn');
   btn.disabled=true;btn.textContent='Submitting...';
